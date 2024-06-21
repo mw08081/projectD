@@ -2,6 +2,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "LvData.h"
+
+#include "Components/ActorComponent.h"
+#include "Engine/World.h"
+#include "GameFramework/PlayerController.h"
+
 #include "LvLoadSystem.generated.h"
 
 UCLASS()
@@ -20,4 +26,7 @@ protected:
 public:
 	// 매 프레임마다 호출됨
 	virtual void Tick(float DeltaTime) override;
+
+	void ReadLv();
+
 };
