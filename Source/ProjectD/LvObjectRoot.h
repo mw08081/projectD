@@ -6,6 +6,14 @@
 #include "Components/ActorComponent.h"
 #include "LvObjectRoot.generated.h"
 
+UENUM(BlueprintType)
+enum class EObjectType : uint8 
+{ 
+	None				UMETA(DisplayName = "None"),
+	FracturingObject	UMETA(DisplayName = "FracturingObject"),
+	ConvertingObject	UMETA(DisplayName = "ConvertingObject"),
+	DisappearingObject	UMETA(DisplayName = "DisappearingObject")
+};
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROJECTD_API ULvObjectRoot : public UActorComponent
@@ -24,7 +32,9 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		EObjectType objectType;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int32 objectPrice;
 	UFUNCTION(BlueprintCallable)
 		int32 getObjectPrice();
