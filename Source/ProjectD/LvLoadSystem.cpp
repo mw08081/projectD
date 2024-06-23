@@ -6,12 +6,13 @@
 //#include "Runtime/Engine/Public/EngineUtils.h"
 #include "EngineUtils.h"
 #include "LvObjectRoot.h"
+#include "LvData.h"
 
 // 기본값 설정
 ALvLoadSystem::ALvLoadSystem()
 {
 	// 모든 프레임에서 Tick()을 호출하도록 이 actor을(를) 설정합니다. 필요하지 않은 경우 이 기능을 해제하여 성능을 향상시킬 수 있습니다.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 }
 
@@ -55,6 +56,13 @@ void ALvLoadSystem::ReadLv()
 			if (actor->FindComponentByClass<ULvObjectRoot>())
 			{
 				UE_LOG(LogTemp, Display, TEXT("static mesh comp : %s "), *actor->GetName());
+
+				FLvObject lvObj;
+				lvObj.location = actor->GetActorLocation();
+				lvObj.rotation = actor->GetActorRotation();
+				lvObj.scale = actor->GetActorScale();
+
+				UE_LOG(LogTemp, Display, TEXT("%s %s %s"), *lvObj.location.ToString(), *lvObj.rotation.ToString(), *lvObj.scale.ToString())
 			}
 		}
 	}

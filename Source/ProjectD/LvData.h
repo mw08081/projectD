@@ -13,7 +13,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FVector location;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FVector rotation;
+		FRotator rotation;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FVector scale;
 };
