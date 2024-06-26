@@ -28,6 +28,7 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	void CalcObjectPrice();
 
 public:	
 	// Called every frame
@@ -39,4 +40,11 @@ public:
 		int32 objectPrice;
 	UFUNCTION(BlueprintCallable)
 		int32 getObjectPrice();
+
+
+
+
+private:
+	// Variable to store the BP_GameInstance class reference
+	UClass* BP_GameInstanceClass;
 };

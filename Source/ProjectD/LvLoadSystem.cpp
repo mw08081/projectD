@@ -55,14 +55,14 @@ void ALvLoadSystem::ReadLv()
 			AActor* actor = *it;
 			if (actor->FindComponentByClass<ULvObjectRoot>())
 			{
-				UE_LOG(LogTemp, Display, TEXT("static mesh comp : %s "), *actor->GetName());
+				//UE_LOG(LogTemp, Display, TEXT("static mesh comp : %s "), *actor->GetName());
 
 				FLvObject lvObj;
 				lvObj.location = actor->GetActorLocation();
 				lvObj.rotation = actor->GetActorRotation();
 				lvObj.scale = actor->GetActorScale();
 
-				UE_LOG(LogTemp, Display, TEXT("%s %s %s"), *lvObj.location.ToString(), *lvObj.rotation.ToString(), *lvObj.scale.ToString())
+				//UE_LOG(LogTemp, Display, TEXT("%s %s %s"), *lvObj.location.ToString(), *lvObj.rotation.ToString(), *lvObj.scale.ToString())
 			}
 		}
 	}
