@@ -10,6 +10,7 @@ UENUM(BlueprintType)
 enum class EObjectType : uint8 
 { 
 	None				UMETA(DisplayName = "None"),
+	Static				UMETA(DisplayName = "Static"),
 	FracturingObject	UMETA(DisplayName = "FracturingObject"),
 	ConvertingObject	UMETA(DisplayName = "ConvertingObject"),
 	DisappearingObject	UMETA(DisplayName = "DisappearingObject")
