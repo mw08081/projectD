@@ -19,12 +19,24 @@ protected:
 public:	
 	virtual void Tick(float DeltaTime) override;
 
-private:
-	//components
+//components
+private:	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	class UNiagaraComponent* nsComponent;
+
+//code Variable
+public:
+private:
+	bool bIsActive;
+	float elapsedPlayTime;
+	const float MAX_PLAY_TIME = 1.5f;
 
 public:
 	UFUNCTION(BlueprintCallable)
 	void SetNs(class UNiagaraSystem* ns);
+	void InitNs();
+	void CheckReturnCondition(float dt);
+
+	void SetIsActive(bool _bIsActive);
+	bool GetIsActive();
 };

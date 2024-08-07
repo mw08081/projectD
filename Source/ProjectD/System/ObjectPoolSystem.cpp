@@ -28,7 +28,6 @@ void AObjectPoolSystem::InitializePool_NsDisplay(TSubclassOf<ANsDisplay> _PoolTa
     {
         ANsDisplay* NewActor = GetWorld()->SpawnActor<ANsDisplay>(PoolTargetClass_NsDisplay);
         NewActor->SetActorHiddenInGame(true);
-        NewActor->SetActorEnableCollision(false);
         ObjectPool_NsDisplay.Add(NewActor);
     }
 }
@@ -40,7 +39,6 @@ ANsDisplay* AObjectPoolSystem::GetPooledObject_NsDisplay()
         if (nsDisplay->IsHidden())
         {
             nsDisplay->SetActorHiddenInGame(false);
-            nsDisplay->SetActorEnableCollision(true);
             nsDisplay->SetActorTickEnabled(true);
             return nsDisplay;
         }
@@ -51,6 +49,7 @@ ANsDisplay* AObjectPoolSystem::GetPooledObject_NsDisplay()
 
 void AObjectPoolSystem::ReturnPooledObject_NsDisplay(ANsDisplay* Ns_Display)
 {
+    Ns_Display->SetActorHiddenInGame(true);
 }
 
 

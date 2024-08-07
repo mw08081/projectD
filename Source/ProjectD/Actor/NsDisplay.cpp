@@ -4,6 +4,8 @@
 #include "Actor/NsDisplay.h"
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraComponent.h"
+#include "GameMode/ProjectD_DefaultGameMode.h"
+#include "System/ObjectPoolSystem.h"
 
 // Sets default values
 ANsDisplay::ANsDisplay()
@@ -26,12 +28,49 @@ void ANsDisplay::BeginPlay()
 void ANsDisplay::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	
+	if (bIsActive) {
+		CheckReturnCondition(DeltaTime);
+	}
 }
 
 void ANsDisplay::SetNs(UNiagaraSystem* ns)
 {
 	nsComponent->SetAsset(ns);
 	nsComponent->Activate();
+
+	SetIsActive(true);
+}
+
+/// <summary>
+/// Niagara System 비활성화
+/// </summary>
+void ANsDisplay::InitNs()
+{
+	nsComponent->Deactivate();
+	elapsedPlayTime = 0;
+}
+
+void ANsDisplay::CheckReturnCondition(float dt)
+{
+	elapsedPlayTime += dt;
+	if (elapsedPlayTime > MAX_PLAY_TIME) {
+		AProjectD_DefaultGameMode* gameMode = Cast<AProjectD_DefaultGameMode>(GetWorld()->GetAuthGameMode());
+		if (gameMode) {
+			InitNs();
+
+			gameMode->ObjectPoolSystem_NsDisplay->ReturnPooledObject_NsDisplay(this);
+		}
+	}
+}
+
+void ANsDisplay::SetIsActive(bool _bIsActive)
+{
+	bIsActive = _bIsActive;
+}
+
+bool ANsDisplay::GetIsActive()
+{
+	return bIsActive;
 }
 
