@@ -2,7 +2,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "LvData.h"
 
 #include "Components/ActorComponent.h"
 #include "Engine/World.h"

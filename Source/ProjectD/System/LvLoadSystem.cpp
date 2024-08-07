@@ -5,8 +5,8 @@
 //#include "Runtime/CoreUObject/Public/UObject/UObjectIterator.h"
 //#include "Runtime/Engine/Public/EngineUtils.h"
 #include "EngineUtils.h"
-#include "LvObjectRoot.h"
-#include "LvData.h"
+#include "Component/LvObjectRoot.h"
+#include "DataStruct/LvData.h"
 
 // 기본값 설정
 ALvLoadSystem::ALvLoadSystem()
