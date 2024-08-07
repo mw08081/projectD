@@ -7,7 +7,8 @@
 AObjectPoolSystem::AObjectPoolSystem()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
+
 
 }
 
@@ -18,10 +19,17 @@ void AObjectPoolSystem::BeginPlay()
 	
 }
 
-// Called every frame
-void AObjectPoolSystem::Tick(float DeltaTime)
+void AObjectPool::InitializePool(TSubclassOf<AActor> ActorClass, int32 InPoolSize)
 {
-	Super::Tick(DeltaTime);
+    PooledActorClass = ActorClass;
+    PoolSize = InPoolSize;
 
+    for (int32 i = 0; i < PoolSize; ++i)
+    {
+        AActor* NewActor = GetWorld()->SpawnActor<AActor>(PooledActorClass);
+        NewActor->SetActorHiddenInGame(true);
+        NewActor->SetActorEnableCollision(false);
+        Pool.Add(NewActor);
+    }
 }
 
