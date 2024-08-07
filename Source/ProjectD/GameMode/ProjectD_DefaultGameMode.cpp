@@ -20,3 +20,14 @@ void AProjectD_DefaultGameMode::InitObjectPool_NsDisplay()
 	ObjectPoolSystem_NsDisplay = GetWorld()->SpawnActor<AObjectPoolSystem>();
 	ObjectPoolSystem_NsDisplay->InitializePool_NsDisplay(PoolTargetClass_NsDisplay, PoolSize_NsDisplay);
 }
+
+ANsDisplay* AProjectD_DefaultGameMode::Get_NsDisplay()
+{
+	ANsDisplay* obj = ObjectPoolSystem_NsDisplay->GetPooledObject_NsDisplay();
+	return obj;
+}
+
+void AProjectD_DefaultGameMode::Return_NsDisplay(ANsDisplay* _NsDisplay)
+{
+
+}

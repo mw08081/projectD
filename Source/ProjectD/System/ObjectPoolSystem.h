@@ -33,10 +33,12 @@ public:
 	// Function to initialize the pool
 	void InitializePool_NsDisplay(TSubclassOf<class ANsDisplay> _PoolTargetClass_NsDisplay, int32 _PoolSize_NsDisplay);
 	
+	UFUNCTION(BlueprintCallable)
 	// Function to get an actor from the pool
 	class ANsDisplay* GetPooledObject_NsDisplay();
 
 	// Function to return an actor to the pool
+	UFUNCTION(BlueprintCallable)
 	void ReturnPooledObject_NsDisplay(class ANsDisplay* Ns_Display);
 
 #pragma endregion

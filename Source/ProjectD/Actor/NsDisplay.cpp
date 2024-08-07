@@ -2,6 +2,8 @@
 
 
 #include "Actor/NsDisplay.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
 
 // Sets default values
 ANsDisplay::ANsDisplay()
@@ -9,6 +11,8 @@ ANsDisplay::ANsDisplay()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	nsComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Niagara System"));
+	RootComponent = nsComponent;
 }
 
 // Called when the game starts or when spawned
@@ -23,5 +27,11 @@ void ANsDisplay::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void ANsDisplay::SetNs(UNiagaraSystem* ns)
+{
+	nsComponent->SetAsset(ns);
+	nsComponent->Activate();
 }
 

@@ -26,7 +26,6 @@ void AObjectPoolSystem::InitializePool_NsDisplay(TSubclassOf<ANsDisplay> _PoolTa
 
     for (int32 i = 0; i < PoolSize_NsDisplay; ++i)
     {
-        UE_LOG(LogTemp, Display, TEXT("%d 'nd ns display"), i);
         ANsDisplay* NewActor = GetWorld()->SpawnActor<ANsDisplay>(PoolTargetClass_NsDisplay);
         NewActor->SetActorHiddenInGame(true);
         NewActor->SetActorEnableCollision(false);
@@ -36,7 +35,18 @@ void AObjectPoolSystem::InitializePool_NsDisplay(TSubclassOf<ANsDisplay> _PoolTa
 
 ANsDisplay* AObjectPoolSystem::GetPooledObject_NsDisplay()
 {
-	return nullptr;
+    for (ANsDisplay* nsDisplay : ObjectPool_NsDisplay)
+    {
+        if (nsDisplay->IsHidden())
+        {
+            nsDisplay->SetActorHiddenInGame(false);
+            nsDisplay->SetActorEnableCollision(true);
+            nsDisplay->SetActorTickEnabled(true);
+            return nsDisplay;
+        }
+    }
+
+    return nullptr;
 }
 
 void AObjectPoolSystem::ReturnPooledObject_NsDisplay(ANsDisplay* Ns_Display)

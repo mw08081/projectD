@@ -12,15 +12,19 @@ class PROJECTD_API ANsDisplay : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
 	ANsDisplay();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
 public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+private:
+	//components
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	class UNiagaraComponent* nsComponent;
+
+public:
+	UFUNCTION(BlueprintCallable)
+	void SetNs(class UNiagaraSystem* ns);
 };

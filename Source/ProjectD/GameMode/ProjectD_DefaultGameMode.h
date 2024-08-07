@@ -17,10 +17,11 @@ public:
     AProjectD_DefaultGameMode();
     virtual void BeginPlay() override;
 
-private:
+public:
     // The object pool
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     class AObjectPoolSystem* ObjectPoolSystem_NsDisplay;
-
+private:
     // The class of the pooled actor
     UPROPERTY(EditDefaultsOnly, Category = "Pooling|NsDisplay")
     TSubclassOf<class ANsDisplay> PoolTargetClass_NsDisplay;
@@ -30,4 +31,8 @@ private:
 	
 private: 
     void InitObjectPool_NsDisplay();
+    UFUNCTION(BlueprintCallable)
+    class ANsDisplay* Get_NsDisplay();
+    UFUNCTION(BlueprintCallable)
+    void Return_NsDisplay(class ANsDisplay* _NsDisplay);
 };
