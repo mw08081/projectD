@@ -19,8 +19,26 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+#pragma region Ns Display Object Pool
+private:
+	TSubclassOf<class ANsDisplay> PoolTargetClass_NsDisplay;
+
+	// The pool of actors
+	TArray<class ANsDisplay*> ObjectPool_NsDisplay;
+
+	// The size of the pool
+	int32 PoolSize_NsDisplay;
+
+public:
+	// Function to initialize the pool
+	void InitializePool_NsDisplay(TSubclassOf<class ANsDisplay> _PoolTargetClass_NsDisplay, int32 _PoolSize_NsDisplay);
+	
+	// Function to get an actor from the pool
+	class ANsDisplay* GetPooledObject_NsDisplay();
+
+	// Function to return an actor to the pool
+	void ReturnPooledObject_NsDisplay(class ANsDisplay* Ns_Display);
+
+#pragma endregion
 
 };

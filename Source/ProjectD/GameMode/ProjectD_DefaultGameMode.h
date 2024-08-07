@@ -13,5 +13,21 @@ UCLASS()
 class PROJECTD_API AProjectD_DefaultGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
+public:
+    AProjectD_DefaultGameMode();
+    virtual void BeginPlay() override;
+
+private:
+    // The object pool
+    class AObjectPoolSystem* ObjectPoolSystem_NsDisplay;
+
+    // The class of the pooled actor
+    UPROPERTY(EditDefaultsOnly, Category = "Pooling|NsDisplay")
+    TSubclassOf<class ANsDisplay> PoolTargetClass_NsDisplay;
+    // The size of the pool
+    UPROPERTY(EditDefaultsOnly, Category = "Pooling|NsDisplay")
+    int32 PoolSize_NsDisplay;
 	
+private: 
+    void InitObjectPool_NsDisplay();
 };
