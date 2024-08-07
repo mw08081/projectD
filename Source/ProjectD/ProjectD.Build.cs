@@ -12,6 +12,6 @@ public class ProjectD : ModuleRules
 
         PrivateDependencyModuleNames.AddRange(new string[] {  });
 
-		//PrivateIncludePaths.Add("ProjectD");
+		PrivateIncludePaths.Add("ProjectD");
     }
 }
