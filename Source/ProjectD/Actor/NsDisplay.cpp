@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Ns.h"
+#include "Actor/NsDisplay.h"
 
 // Sets default values
-ANs::ANs()
+ANsDisplay::ANsDisplay()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -12,14 +12,14 @@ ANs::ANs()
 }
 
 // Called when the game starts or when spawned
-void ANs::BeginPlay()
+void ANsDisplay::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
 // Called every frame
-void ANs::Tick(float DeltaTime)
+void ANsDisplay::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 

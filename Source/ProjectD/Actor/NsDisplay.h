@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Ns.generated.h"
+#include "NsDisplay.generated.h"
 
 UCLASS()
-class PROJECTD_API ANs : public AActor
+class PROJECTD_API ANsDisplay : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ANs();
+	ANsDisplay();
 
 protected:
 	// Called when the game starts or when spawned
