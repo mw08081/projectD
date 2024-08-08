@@ -36,6 +36,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	// Function to get an actor from the pool
 	class ANsDisplay* GetPooledObject_NsDisplay();
+	UFUNCTION(BlueprintCallable)
+	class ANsDisplay* GetAddtionalObject_NsDisplay();
 
 	// Function to return an actor to the pool
 	UFUNCTION(BlueprintCallable)

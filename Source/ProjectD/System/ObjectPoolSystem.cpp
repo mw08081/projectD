@@ -47,6 +47,14 @@ ANsDisplay* AObjectPoolSystem::GetPooledObject_NsDisplay()
     return nullptr;
 }
 
+ANsDisplay* AObjectPoolSystem::GetAddtionalObject_NsDisplay()
+{
+    ANsDisplay* addtionalNewNsDisplay = GetWorld()->SpawnActor<ANsDisplay>(PoolTargetClass_NsDisplay);
+    addtionalNewNsDisplay->SetActorHiddenInGame(false);
+    addtionalNewNsDisplay->SetActorTickEnabled(true);
+    return addtionalNewNsDisplay;
+}
+
 void AObjectPoolSystem::ReturnPooledObject_NsDisplay(ANsDisplay* Ns_Display)
 {
     Ns_Display->SetActorHiddenInGame(true);
