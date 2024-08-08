@@ -48,18 +48,21 @@ void ANsDisplay::SetNs(UNiagaraSystem* ns)
 void ANsDisplay::InitNs()
 {
 	nsComponent->Deactivate();
-	elapsedPlayTime = 0;
+	//elapsedPlayTime = 0;
 }
 
 void ANsDisplay::CheckReturnCondition(float dt)
 {
 	elapsedPlayTime += dt;
 	if (elapsedPlayTime > MAX_PLAY_TIME) {
+		InitNs();
+	}
+
+	if (elapsedPlayTime > MAX_RESIDUAL_TIME) {
 		AProjectD_DefaultGameMode* gameMode = Cast<AProjectD_DefaultGameMode>(GetWorld()->GetAuthGameMode());
 		if (gameMode) {
-			InitNs();
-
 			gameMode->ObjectPoolSystem_NsDisplay->ReturnPooledObject_NsDisplay(this);
+			elapsedPlayTime = 0.f;
 		}
 	}
 }
