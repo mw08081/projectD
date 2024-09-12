@@ -16,6 +16,21 @@ class PROJECTD_API AProjectD_DefaultGameMode : public AGameModeBase
 public:
     AProjectD_DefaultGameMode();
     virtual void BeginPlay() override;
+protected:
+    virtual void Tick(float deltaTime) override;
+
+public:
+    //float ElapsedGameTime = 0;
+    //UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "FadeIn")
+    //float FadeInDelay = 0;
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "FadeIn")
+    float FadeInValue = 0;
+private:
+    FTimerHandle FadeInHandle;
+    bool bCanFadeIn = false;
+
+    void SetCanFadeIn();
+    void FadeIn(float dt);
 
 public:
     // The object pool
