@@ -15,6 +15,7 @@ void AProjectD_DefaultGameMode::BeginPlay()
 	InitObjectPool_NsDisplay();
 }
 
+
 void AProjectD_DefaultGameMode::InitObjectPool_NsDisplay()
 {
 	ObjectPoolSystem_NsDisplay = GetWorld()->SpawnActor<AObjectPoolSystem>();
