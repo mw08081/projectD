@@ -42,6 +42,10 @@ public:
     const float PHASE1_CLEAR_PERCENTAGE = 0.4;
     const float PHASE2_CLEAR_PERCENTAGE = 0.6;
 private:
+    const float SLOW_TIMEDILATION = 0.25;
+
+public:
+private:
     void CalcAllObjectPriceInWorld();
 
 #pragma endregion

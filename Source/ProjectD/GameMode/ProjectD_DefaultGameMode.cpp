@@ -1,12 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
-#include "GameMode/ProjectD_DefaultGameMode.h"
-#include "System/ObjectPoolSystem.h"
+#include "GameFramework/WorldSettings.h"
 #include "TimerManager.h"
 #include "Kismet/GameplayStatics.h"
+
+#include "EngineUtils.h"
+
 #include "Component/LvObjectRoot.h"
-#include <EngineUtils.h>
+#include "System/ObjectPoolSystem.h"
+#include "GameMode/ProjectD_DefaultGameMode.h"
+
 
 AProjectD_DefaultGameMode::AProjectD_DefaultGameMode()
 {
@@ -37,6 +40,14 @@ void AProjectD_DefaultGameMode::FadeIn(float dt)
 	if (bCanFadeIn && FadeInValue < 1) {
 		FadeInValue += dt;
 		//UE_LOG(LogTemp, Display, TEXT("%f"), FadeInValue);
+	}
+
+	if (FadeInValue > 1) {
+		UE_LOG(LogTemp, Display, TEXT("SLOW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"));
+		GetWorld()->GetWorldSettings()->SetTimeDilation(SLOW_TIMEDILATION);
+
+		bCanFadeIn = false;
+		FadeInValue = 0;
 	}
 }
 
