@@ -4,6 +4,9 @@
 #include "GameMode/ProjectD_DefaultGameMode.h"
 #include "System/ObjectPoolSystem.h"
 #include "TimerManager.h"
+#include "Kismet/GameplayStatics.h"
+#include "Component/LvObjectRoot.h"
+#include <EngineUtils.h>
 
 AProjectD_DefaultGameMode::AProjectD_DefaultGameMode()
 {
@@ -14,6 +17,8 @@ void AProjectD_DefaultGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	CalcAllObjectPriceInWorld();
+
 	GetWorldTimerManager().SetTimer(FadeInHandle, this, &AProjectD_DefaultGameMode::SetCanFadeIn, 2.f, false);
 	InitObjectPool_NsDisplay();
 }
@@ -24,15 +29,32 @@ void AProjectD_DefaultGameMode::SetCanFadeIn()
 
 void AProjectD_DefaultGameMode::Tick(float deltaTime)
 {
-	//ElapsedGameTime += deltaTime;
+	ElapsedGameTime += deltaTime;
 	FadeIn(deltaTime);
 }
 void AProjectD_DefaultGameMode::FadeIn(float dt)
 {
 	if (bCanFadeIn && FadeInValue < 1) {
 		FadeInValue += dt;
-		UE_LOG(LogTemp, Display, TEXT("%f"), FadeInValue);
+		//UE_LOG(LogTemp, Display, TEXT("%f"), FadeInValue);
 	}
+}
+
+void AProjectD_DefaultGameMode::CalcAllObjectPriceInWorld()
+{
+	for (const AActor* ActorPtr : FActorRange(GetWorld()))
+	{
+		ULvObjectRoot* lvObjectRoot = ActorPtr->FindComponentByClass<ULvObjectRoot>();
+		if (lvObjectRoot != nullptr) {
+			UE_LOG(LogTemp, Display, TEXT("%s 's price : %d"), *(ActorPtr->GetActorNameOrLabel()), lvObjectRoot->objectPrice);
+
+			TotalObjectPrice += lvObjectRoot->objectPrice;
+		} 
+	}
+
+	Phase1_ClearPrice = TotalObjectPrice * PHASE1_CLEAR_PERCENTAGE;
+	Phase2_ClearPrice = TotalObjectPrice * PHASE2_CLEAR_PERCENTAGE;
+	UE_LOG(LogTemp, Display, TEXT("phase 1 : %d , phase 2: %d"), Phase1_ClearPrice, Phase2_ClearPrice);
 }
 
 

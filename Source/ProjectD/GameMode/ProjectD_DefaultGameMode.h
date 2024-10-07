@@ -20,7 +20,6 @@ protected:
     virtual void Tick(float deltaTime) override;
 
 public:
-    //float ElapsedGameTime = 0;
     //UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "FadeIn")
     //float FadeInDelay = 0;
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "FadeIn")
@@ -31,6 +30,23 @@ private:
 
     void SetCanFadeIn();
     void FadeIn(float dt);
+
+#pragma region Game Condition
+
+public:
+    float ElapsedGameTime = 0;
+    int32 TotalObjectPrice = 0;
+    int32 Phase1_ClearPrice = 0;
+    int32 Phase2_ClearPrice = 0;
+
+    const float PHASE1_CLEAR_PERCENTAGE = 0.4;
+    const float PHASE2_CLEAR_PERCENTAGE = 0.6;
+private:
+    void CalcAllObjectPriceInWorld();
+
+#pragma endregion
+
+#pragma region Object Pool
 
 public:
     // The object pool
@@ -43,11 +59,13 @@ private:
     // The size of the pool
     UPROPERTY(EditDefaultsOnly, Category = "Pooling|NsDisplay")
     int32 PoolSize_NsDisplay;
-	
-private: 
+
+private:
     void InitObjectPool_NsDisplay();
     UFUNCTION(BlueprintCallable)
     class ANsDisplay* Get_NsDisplay();
     UFUNCTION(BlueprintCallable)
     void Return_NsDisplay(class ANsDisplay* _NsDisplay);
+#pragma endregion
+
 };
