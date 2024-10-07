@@ -47,7 +47,7 @@ void AProjectD_DefaultGameMode::FadeIn(float dt)
 		GetWorld()->GetWorldSettings()->SetTimeDilation(SLOW_TIMEDILATION);
 
 		bCanFadeIn = false;
-		FadeInValue = 0;
+		FadeInValue = 0; 
 	}
 }
 
