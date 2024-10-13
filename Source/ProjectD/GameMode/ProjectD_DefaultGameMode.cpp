@@ -34,6 +34,12 @@ void AProjectD_DefaultGameMode::Tick(float deltaTime)
 {
 	ElapsedGameTime += deltaTime;
 	FadeIn(deltaTime);
+
+	if(GetWorld()->GetTimerManager().GetTimerElapsed(RollbackTimedilationHandle) != -1)
+		UE_LOG(LogTemp, Display, TEXT("RollbackTimedilationHandle : %f"), GetWorld()->GetTimerManager().GetTimerElapsed(RollbackTimedilationHandle));
+	if (GetWorld()->GetTimerManager().GetTimerElapsed(CoolDownSlowHandle) != -1)
+		UE_LOG(LogTemp, Display, TEXT("CoolDownSlowHandle : %f"), GetWorld()->GetTimerManager().GetTimerElapsed(CoolDownSlowHandle));
+
 }
 void AProjectD_DefaultGameMode::FadeIn(float dt)
 {
@@ -42,14 +48,8 @@ void AProjectD_DefaultGameMode::FadeIn(float dt)
 		//UE_LOG(LogTemp, Display, TEXT("%f"), FadeInValue);
 	}
 
-	if (FadeInValue > 1) {
-		UE_LOG(LogTemp, Display, TEXT("SLOW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"));
-		GetWorld()->GetWorldSettings()->SetTimeDilation(SLOW_TIMEDILATION);
-
-		bCanFadeIn = false;
-		FadeInValue = 0; 
-	}
 }
+
 
 void AProjectD_DefaultGameMode::CalcAllObjectPriceInWorld()
 {
@@ -68,6 +68,77 @@ void AProjectD_DefaultGameMode::CalcAllObjectPriceInWorld()
 	UE_LOG(LogTemp, Display, TEXT("phase 1 : %d , phase 2: %d"), Phase1_ClearPrice, Phase2_ClearPrice);
 }
 
+void AProjectD_DefaultGameMode::CalcDestroyedObjectPrice(int32 price)
+{
+	CurScore += price;
+
+	CountSlowStack();
+}
+
+void AProjectD_DefaultGameMode::SetCanSlow(bool _canSlow)
+{
+	UE_LOG(LogTemp, Display, TEXT("Can slow : %d"), CanSlow);
+	CanSlow = _canSlow;
+}
+
+void AProjectD_DefaultGameMode::CountSlowStack()
+{
+	if (IsInSlowCoolDown == false && CanSlow == true) {
+		SlowTimedilation();
+	}
+	else {
+		curSlowStack += 1;
+	}
+
+	if (curSlowStack >= MAX_SLOW_STACK - 1) {
+		SetCanSlow(true);
+	}
+}
+
+void AProjectD_DefaultGameMode::SlowTimedilation()
+{
+	if (IsInSlowCoolDown == true) return;
+
+	InitSlowStack();
+
+	IsInSlowCoolDown = true;
+	GetWorld()->GetWorldSettings()->SetTimeDilation(TIMEDILATION_SLOW);
+
+	//N초 후 딜레이션 원복하기 -> 타임매니저
+	GetWorldTimerManager().SetTimer(
+		RollbackTimedilationHandle, 
+		this, 
+		&AProjectD_DefaultGameMode::RollbackTimedilation,
+		DURATION_SLOW * TIMEDILATION_SLOW, 
+		false
+	);
+}
+
+void AProjectD_DefaultGameMode::RollbackTimedilation()
+{
+	GetWorld()->GetWorldSettings()->SetTimeDilation(TIMEDILATION_DEFAULT);
+
+	GetWorldTimerManager().SetTimer(
+		CoolDownSlowHandle,
+		this,
+		&AProjectD_DefaultGameMode::InitIsInSlowCoolDown,
+		COOLDOWN_SLOW,
+		false
+	);
+}
+
+void AProjectD_DefaultGameMode::InitIsInSlowCoolDown()
+{
+	IsInSlowCoolDown = false;
+}
+
+void AProjectD_DefaultGameMode::InitSlowStack()
+{
+	SetCanSlow(false);
+	curSlowStack = 0;
+}
+
+#pragma region Object Pool
 
 void AProjectD_DefaultGameMode::InitObjectPool_NsDisplay()
 {
@@ -85,3 +156,5 @@ void AProjectD_DefaultGameMode::Return_NsDisplay(ANsDisplay* _NsDisplay)
 {
 
 }
+
+#pragma endregion

@@ -35,18 +35,60 @@ private:
 
 public:
     float ElapsedGameTime = 0;
+    
+    const float PHASE1_CLEAR_PERCENTAGE = 0.4;
+    const float PHASE2_CLEAR_PERCENTAGE = 0.6;
+private:
+    // 클리어 점수 변수
     int32 TotalObjectPrice = 0;
     int32 Phase1_ClearPrice = 0;
     int32 Phase2_ClearPrice = 0;
 
-    const float PHASE1_CLEAR_PERCENTAGE = 0.4;
-    const float PHASE2_CLEAR_PERCENTAGE = 0.6;
+    int32 CurScore = 0;
+public:
+    // 클리어 조건 함수
+    UFUNCTION(BlueprintCallable)
+    void CalcDestroyedObjectPrice(int32 price);
 private:
-    const float SLOW_TIMEDILATION = 0.25;
+    // 클리어 조건 함수
+    void CalcAllObjectPriceInWorld();
+    
+#pragma endregion
+
+#pragma region MyRegion
 
 public:
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    bool CanSlow = false;
 private:
-    void CalcAllObjectPriceInWorld();
+
+    // 슬로우 관련 변수
+    FTimerHandle RollbackTimedilationHandle;
+    FTimerHandle CoolDownSlowHandle;
+
+    const float COOLDOWN_SLOW = 15;
+    const float DURATION_SLOW = 3;
+    const float TIMEDILATION_DEFAULT = 1;
+    const float TIMEDILATION_SLOW = 0.25;
+
+    const int32 MAX_SLOW_STACK = 4;
+    int32 curSlowStack = 0;
+
+    bool IsInSlowCoolDown = false;
+
+public:
+    UFUNCTION(BlueprintCallable)
+    void SetCanSlow(bool _canSlow);
+    UFUNCTION(BlueprintCallable)
+    void SlowTimedilation();
+private:
+    // 슬로우 함수
+    void CountSlowStack();
+
+    void RollbackTimedilation();
+    void InitIsInSlowCoolDown();
+
+    void InitSlowStack();
 
 #pragma endregion
 
