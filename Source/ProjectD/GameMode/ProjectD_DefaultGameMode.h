@@ -48,7 +48,7 @@ private:
 public:
     // 클리어 조건 함수
     UFUNCTION(BlueprintCallable)
-    void CalcDestroyedObjectPrice(int32 price);
+    void GetScore(int32 price);
 private:
     // 클리어 조건 함수
     void CalcAllObjectPriceInWorld();

@@ -69,12 +69,14 @@ void AProjectD_DefaultGameMode::CalcAllObjectPriceInWorld()
 	UE_LOG(LogTemp, Display, TEXT("phase 1 : %d , phase 2: %d"), Phase1_ClearPrice, Phase2_ClearPrice);
 }
 
-void AProjectD_DefaultGameMode::CalcDestroyedObjectPrice(int32 price)
+void AProjectD_DefaultGameMode::GetScore(int32 price)
 {
 	CurScore += price;
 
 	CountSlowStack();
 }
+
+#pragma region Slow
 
 void AProjectD_DefaultGameMode::SetCanSlow(bool _canSlow)
 {
@@ -118,10 +120,10 @@ void AProjectD_DefaultGameMode::SlowTimedilation()
 
 	//N초 후 딜레이션 원복하기 -> 타임매니저
 	GetWorldTimerManager().SetTimer(
-		RollbackTimedilationHandle, 
-		this, 
+		RollbackTimedilationHandle,
+		this,
 		&AProjectD_DefaultGameMode::RollbackTimedilation,
-		DURATION_SLOW * TIMEDILATION_SLOW, 
+		DURATION_SLOW * TIMEDILATION_SLOW,
 		false
 	);
 }
@@ -150,6 +152,9 @@ void AProjectD_DefaultGameMode::InitSlowStack()
 	curSlowStack = 0;
 	UE_LOG(LogTemp, Display, TEXT("stack slowstack : %d"), curSlowStack);
 }
+
+#pragma endregion
+
 
 #pragma region Object Pool
 
