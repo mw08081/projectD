@@ -33,14 +33,9 @@ void AProjectD_DefaultGameMode::SetCanFadeIn()
 void AProjectD_DefaultGameMode::Tick(float deltaTime)
 {
 	ElapsedGameTime += deltaTime;
-	FadeIn(deltaTime);
+	//FadeIn(deltaTime);
 
-	/*if (GetWorld()->GetTimerManager().GetTimerElapsed(CoolDownSlowHandle) != -1)
-		UE_LOG(LogTemp, Display, TEXT("CoolDownSlowHandle : %f"), GetWorld()->GetTimerManager().GetTimerElapsed(CoolDownSlowHandle));
-
-	if(GetWorld()->GetTimerManager().IsTimerActive(RollbackTimedilationHandle))
-		UE_LOG(LogTemp, Display, TEXT("RollbackTimedilationHandle : %f"), GetWorld()->GetTimerManager().GetTimerElapsed(RollbackTimedilationHandle));*/
-
+	InterpolateScore(deltaTime);
 }
 void AProjectD_DefaultGameMode::FadeIn(float dt)
 {
@@ -54,27 +49,47 @@ void AProjectD_DefaultGameMode::FadeIn(float dt)
 
 void AProjectD_DefaultGameMode::CalcAllObjectPriceInWorld()
 {
+	//#include "EngineUtils.h" 을 이용한 액터 순회
 	for (const AActor* ActorPtr : FActorRange(GetWorld()))
 	{
+		//액터 내의 lvObjectRoot 회수
 		ULvObjectRoot* lvObjectRoot = ActorPtr->FindComponentByClass<ULvObjectRoot>();
 		if (lvObjectRoot != nullptr) {
-			UE_LOG(LogTemp, Display, TEXT("%s 's price : %d"), *(ActorPtr->GetActorNameOrLabel()), lvObjectRoot->objectPrice);
-
 			TotalObjectPrice += lvObjectRoot->objectPrice;
 		} 
 	}
 
-	Phase1_ClearPrice = TotalObjectPrice * PHASE1_CLEAR_PERCENTAGE;
-	Phase2_ClearPrice = TotalObjectPrice * PHASE2_CLEAR_PERCENTAGE;
-	UE_LOG(LogTemp, Display, TEXT("phase 1 : %d , phase 2: %d"), Phase1_ClearPrice, Phase2_ClearPrice);
+	Phase1_ClearScore = TotalObjectPrice * PHASE1_CLEAR_PERCENTAGE;
+	Phase2_ClearScore = TotalObjectPrice * PHASE2_CLEAR_PERCENTAGE;
+	UE_LOG(LogTemp, Display, TEXT("phase 1 : %d , phase 2: %d"), Phase1_ClearScore, Phase2_ClearScore);
 }
 
 void AProjectD_DefaultGameMode::GetScore(int32 price)
 {
-	CurScore += price;
+	//점수 직접 증가 x, 보간값 업데이트 후 보간을 통한 점수증가
+	//CurScore += price;
+	InterpolTargetScore += price;
 
 	CountSlowStack();
 }
+
+void AProjectD_DefaultGameMode::InterpolateScore(float dt)
+{
+	if (CurScore == InterpolTargetScore) return;
+
+	// Define a lerp speed or factor. This determines how quickly the score interpolates.
+	float LerpSpeed = 2.5f; // You can adjust this value to control the speed of interpolation.
+
+	// Perform linear interpolation between CurScore and InterpolTargetScore
+	CurScore = FMath::Lerp(CurScore, InterpolTargetScore, LerpSpeed * dt);
+
+	// Optional: Clamp the score to ensure it does not overshoot due to floating-point precision issues.
+	if (FMath::Abs(CurScore - InterpolTargetScore) < 100)
+	{
+		CurScore = InterpolTargetScore;
+	}
+}
+
 
 #pragma region Slow
 
@@ -87,6 +102,7 @@ void AProjectD_DefaultGameMode::CountSlowStack()
 {
 	if (IsInSlowCoolDown == true) return;
 
+	//1초 내로 n개 파괴 타이머 : 중복실행을 막기위한 IsTimerActive
 	if (GetWorld()->GetWorld()->GetTimerManager().IsTimerActive(InitSlowStackHandle) == false) {
 		GetWorldTimerManager().SetTimer(
 			InitSlowStackHandle,
@@ -102,6 +118,7 @@ void AProjectD_DefaultGameMode::CountSlowStack()
 	}
 	else {
 		curSlowStack += 1;
+		//UE_LOG(LogTemp, Display, TEXT("stack slowstack : %d"), curSlowStack);
 	}
 
 	if (curSlowStack >= MAX_SLOW_STACK - 1) {
@@ -150,11 +167,9 @@ void AProjectD_DefaultGameMode::InitSlowStack()
 {
 	SetCanSlow(false);
 	curSlowStack = 0;
-	UE_LOG(LogTemp, Display, TEXT("stack slowstack : %d"), curSlowStack);
 }
 
 #pragma endregion
-
 
 #pragma region Object Pool
 

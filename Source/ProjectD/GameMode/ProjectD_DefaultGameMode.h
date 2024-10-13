@@ -35,16 +35,23 @@ private:
 
 public:
     float ElapsedGameTime = 0;
-    
-    const float PHASE1_CLEAR_PERCENTAGE = 0.4;
-    const float PHASE2_CLEAR_PERCENTAGE = 0.6;
+
+    // 클리어 점수 변수
+    UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
+    int32 TotalObjectPrice = 0;
+    UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
+    int32 Phase1_ClearScore = 0;
+    UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
+    int32 Phase2_ClearScore = 0;
+
+    UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
+    int32 CurScore = 0;
 private:
     // 클리어 점수 변수
-    int32 TotalObjectPrice = 0;
-    int32 Phase1_ClearPrice = 0;
-    int32 Phase2_ClearPrice = 0;
+    const float PHASE1_CLEAR_PERCENTAGE = 0.4;
+    const float PHASE2_CLEAR_PERCENTAGE = 0.6;
 
-    int32 CurScore = 0;
+    int32 InterpolTargetScore;
 public:
     // 클리어 조건 함수
     UFUNCTION(BlueprintCallable)
@@ -52,6 +59,7 @@ public:
 private:
     // 클리어 조건 함수
     void CalcAllObjectPriceInWorld();
+    void InterpolateScore(float dt);
     
 #pragma endregion
 
