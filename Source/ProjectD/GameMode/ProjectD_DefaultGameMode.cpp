@@ -35,10 +35,11 @@ void AProjectD_DefaultGameMode::Tick(float deltaTime)
 	ElapsedGameTime += deltaTime;
 	FadeIn(deltaTime);
 
-	if(GetWorld()->GetTimerManager().GetTimerElapsed(RollbackTimedilationHandle) != -1)
-		UE_LOG(LogTemp, Display, TEXT("RollbackTimedilationHandle : %f"), GetWorld()->GetTimerManager().GetTimerElapsed(RollbackTimedilationHandle));
-	if (GetWorld()->GetTimerManager().GetTimerElapsed(CoolDownSlowHandle) != -1)
+	/*if (GetWorld()->GetTimerManager().GetTimerElapsed(CoolDownSlowHandle) != -1)
 		UE_LOG(LogTemp, Display, TEXT("CoolDownSlowHandle : %f"), GetWorld()->GetTimerManager().GetTimerElapsed(CoolDownSlowHandle));
+
+	if(GetWorld()->GetTimerManager().IsTimerActive(RollbackTimedilationHandle))
+		UE_LOG(LogTemp, Display, TEXT("RollbackTimedilationHandle : %f"), GetWorld()->GetTimerManager().GetTimerElapsed(RollbackTimedilationHandle));*/
 
 }
 void AProjectD_DefaultGameMode::FadeIn(float dt)
@@ -77,13 +78,24 @@ void AProjectD_DefaultGameMode::CalcDestroyedObjectPrice(int32 price)
 
 void AProjectD_DefaultGameMode::SetCanSlow(bool _canSlow)
 {
-	UE_LOG(LogTemp, Display, TEXT("Can slow : %d"), CanSlow);
 	CanSlow = _canSlow;
 }
 
 void AProjectD_DefaultGameMode::CountSlowStack()
 {
-	if (IsInSlowCoolDown == false && CanSlow == true) {
+	if (IsInSlowCoolDown == true) return;
+
+	if (GetWorld()->GetWorld()->GetTimerManager().IsTimerActive(InitSlowStackHandle) == false) {
+		GetWorldTimerManager().SetTimer(
+			InitSlowStackHandle,
+			this,
+			&AProjectD_DefaultGameMode::InitSlowStack,
+			1,
+			false
+		);
+	}
+
+	if (CanSlow == true) {
 		SlowTimedilation();
 	}
 	else {
@@ -136,6 +148,7 @@ void AProjectD_DefaultGameMode::InitSlowStack()
 {
 	SetCanSlow(false);
 	curSlowStack = 0;
+	UE_LOG(LogTemp, Display, TEXT("stack slowstack : %d"), curSlowStack);
 }
 
 #pragma region Object Pool

@@ -55,14 +55,22 @@ private:
     
 #pragma endregion
 
-#pragma region MyRegion
+#pragma region Slow
 
 public:
+    /// <summary>
+    /// CanSlow 는 더이상 BlowSlow와 연관이 없으며, BlowSlow는 사라졌습니다.
+    /// 강타가능시, 직접적으로 SlowTimedilation()을 호출하며, 
+    /// CanSlow는 일정 조건을 달성해야만 SlowTimedilation()를 호출할수있습니다.
+    /// </summary>
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     bool CanSlow = false;
 private:
-
     // 슬로우 관련 변수
+    /// <summary>
+    /// n초 이내로, CurSlowStack이 MAX_SLOW_STACK을 이상이되면 slow 발동
+    /// </summary>
+    FTimerHandle InitSlowStackHandle;
     FTimerHandle RollbackTimedilationHandle;
     FTimerHandle CoolDownSlowHandle;
 
@@ -78,11 +86,10 @@ private:
 
 public:
     UFUNCTION(BlueprintCallable)
-    void SetCanSlow(bool _canSlow);
-    UFUNCTION(BlueprintCallable)
     void SlowTimedilation();
 private:
     // 슬로우 함수
+    void SetCanSlow(bool _canSlow);
     void CountSlowStack();
 
     void RollbackTimedilation();
