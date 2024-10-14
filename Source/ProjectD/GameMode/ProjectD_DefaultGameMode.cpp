@@ -66,28 +66,28 @@ void AProjectD_DefaultGameMode::CalcAllObjectPriceInWorld()
 
 void AProjectD_DefaultGameMode::GetScore(int32 price)
 {
-	//점수 직접 증가 x, 보간값 업데이트 후 보간을 통한 점수증가
-	//CurScore += price;
+	// 새로운 보간의 시작 (시작 : 현재점수, 목표 : 현재점수 + price)
+	ScoreInterpolStartVal = CurScore;
 	InterpolTargetScore += price;
+
+	// 보간값 초기화
+	ElapsedScoreInterpolTime = 0;
+	ScoreInterpolDuration = FMath::Max((FMath::Abs(ScoreInterpolStartVal - InterpolTargetScore) * SCORE_INTERPOL_DURATION_RATE),
+									SCORE_INTERPOL_MIN_DURATION);
 
 	CountSlowStack();
 }
 
 void AProjectD_DefaultGameMode::InterpolateScore(float dt)
 {
-	if (CurScore == InterpolTargetScore) return;
-
-	// Define a lerp speed or factor. This determines how quickly the score interpolates.
-	float LerpSpeed = 2.5f; // You can adjust this value to control the speed of interpolation.
-
-	// Perform linear interpolation between CurScore and InterpolTargetScore
-	CurScore = FMath::Lerp(CurScore, InterpolTargetScore, LerpSpeed * dt);
-
-	// Optional: Clamp the score to ensure it does not overshoot due to floating-point precision issues.
-	if (FMath::Abs(CurScore - InterpolTargetScore) < 100)
-	{
+	if (CurScore >= InterpolTargetScore) { 
 		CurScore = InterpolTargetScore;
+		return; 
 	}
+	ElapsedScoreInterpolTime += dt;
+
+	//고정된 A to B의 Lerp
+	CurScore = FMath::Lerp(ScoreInterpolStartVal, InterpolTargetScore, ElapsedScoreInterpolTime / ScoreInterpolDuration);
 }
 
 

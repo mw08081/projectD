@@ -51,6 +51,12 @@ private:
     const float PHASE1_CLEAR_PERCENTAGE = 0.4;
     const float PHASE2_CLEAR_PERCENTAGE = 0.6;
 
+    // 점수 보간 변수
+    const float SCORE_INTERPOL_DURATION_RATE = 0.002f;
+    const float SCORE_INTERPOL_MIN_DURATION = 1;
+    float ElapsedScoreInterpolTime = 0;
+    float ScoreInterpolDuration;
+    int32 ScoreInterpolStartVal;
     int32 InterpolTargetScore;
 public:
     // 클리어 조건 함수
@@ -59,6 +65,8 @@ public:
 private:
     // 클리어 조건 함수
     void CalcAllObjectPriceInWorld();
+
+    // 점수 보간
     void InterpolateScore(float dt);
     
 #pragma endregion
