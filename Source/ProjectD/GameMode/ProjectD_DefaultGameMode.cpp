@@ -55,15 +55,20 @@ void AProjectD_DefaultGameMode::CalcAllObjectPriceInWorld()
 		//액터 내의 lvObjectRoot 회수
 		ULvObjectRoot* lvObjectRoot = ActorPtr->FindComponentByClass<ULvObjectRoot>();
 		if (lvObjectRoot != nullptr) {
+			UE_LOG(LogTemp, Display, TEXT("%s price %d"), *(ActorPtr->GetName()), lvObjectRoot->objectPrice);
 			TotalObjectPrice += lvObjectRoot->objectPrice;
 		} 
 	}
 
 	Phase1_ClearScore = TotalObjectPrice * PHASE1_CLEAR_PERCENTAGE;
 	Phase2_ClearScore = TotalObjectPrice * PHASE2_CLEAR_PERCENTAGE;
-	UE_LOG(LogTemp, Display, TEXT("phase 1 : %d , phase 2: %d"), Phase1_ClearScore, Phase2_ClearScore);
+	UE_LOG(LogTemp, Display, TEXT("Total : %d, phase 1 : %d , phase 2: %d"), TotalObjectPrice, Phase1_ClearScore, Phase2_ClearScore);
 }
 
+/// <summary>
+/// 점수 획득, 보간 트리거 
+/// </summary>
+/// <param name="price">획득점수</param>
 void AProjectD_DefaultGameMode::GetScore(int32 price)
 {
 	// 새로운 보간의 시작 (시작 : 현재점수, 목표 : 현재점수 + price)
@@ -72,12 +77,18 @@ void AProjectD_DefaultGameMode::GetScore(int32 price)
 
 	// 보간값 초기화
 	ElapsedScoreInterpolTime = 0;
-	ScoreInterpolDuration = FMath::Max((FMath::Abs(ScoreInterpolStartVal - InterpolTargetScore) * SCORE_INTERPOL_DURATION_RATE),
-									SCORE_INTERPOL_MIN_DURATION);
+	ScoreInterpolDuration = FMath::Min((FMath::Abs(ScoreInterpolStartVal - InterpolTargetScore) * SCORE_INTERPOL_DURATION_RATE),
+									SOCRE_INTERPOL_MAX_DURATION);		//최댓값 필터
+	ScoreInterpolDuration = FMath::Max(ScoreInterpolDuration, SCORE_INTERPOL_MIN_DURATION);		//최솟값 필터
 
 	CountSlowStack();
 }
 
+/// <summary>
+/// Tick함수에서 실행
+/// CurScore이 InterpolTargetScore보다 작을때만 실행(GetScore 실행시 Trigger)
+/// </summary>
+/// <param name="dt">DeltaTime</param>
 void AProjectD_DefaultGameMode::InterpolateScore(float dt)
 {
 	if (CurScore >= InterpolTargetScore) { 

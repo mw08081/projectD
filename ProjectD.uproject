@@ -28,6 +28,10 @@
 		{
 			"Name": "NiagaraSimCaching",
 			"Enabled": true
+		},
+		{ 
+			"Name": "ProceduralMeshComponent",
+			"Enabled": true
 		}
 	]
 }

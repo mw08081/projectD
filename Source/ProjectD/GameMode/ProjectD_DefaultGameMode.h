@@ -53,6 +53,7 @@ private:
 
     // 점수 보간 변수
     const float SCORE_INTERPOL_DURATION_RATE = 0.002f;
+    const float SOCRE_INTERPOL_MAX_DURATION = 5;
     const float SCORE_INTERPOL_MIN_DURATION = 1;
     float ElapsedScoreInterpolTime = 0;
     float ScoreInterpolDuration;

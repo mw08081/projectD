@@ -10,7 +10,8 @@ public class ProjectD : ModuleRules
 	
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" , "UMG", 
 															"Json", "JsonUtilities",
-                                                            "Niagara"});
+                                                            "Niagara" , "ProceduralMeshComponent" });
+        
 
         PrivateDependencyModuleNames.AddRange(new string[] {  });
 

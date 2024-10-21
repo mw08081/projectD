@@ -63,6 +63,8 @@ void ANsDisplay::CheckReturnCondition(float dt)
 		if (gameMode) {
 			gameMode->ObjectPoolSystem_NsDisplay->ReturnPooledObject_NsDisplay(this);
 			elapsedPlayTime = 0.f;
+
+			UE_LOG(LogTemp, Display, TEXT("RETURBN"));
 		}
 	}
 }

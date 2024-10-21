@@ -19,6 +19,11 @@ void AObjectPoolSystem::BeginPlay()
     InitializePool_NsDisplay(PoolTargetClass_NsDisplay, PoolSize_NsDisplay);
 }
 
+/// <summary>
+/// 풀 초기화
+/// </summary>
+/// <param name="_PoolTargetClass_NsDisplay"></param>
+/// <param name="_PoolSize_NsDisplay"></param>
 void AObjectPoolSystem::InitializePool_NsDisplay(TSubclassOf<ANsDisplay> _PoolTargetClass_NsDisplay, int32 _PoolSize_NsDisplay)
 {
     PoolTargetClass_NsDisplay = _PoolTargetClass_NsDisplay;
@@ -32,6 +37,10 @@ void AObjectPoolSystem::InitializePool_NsDisplay(TSubclassOf<ANsDisplay> _PoolTa
     }
 }
 
+/// <summary>
+/// 풀 받아오기
+/// </summary>
+/// <returns>사용가능한 액터</returns>
 ANsDisplay* AObjectPoolSystem::GetPooledObject_NsDisplay()
 {
     for (ANsDisplay* nsDisplay : ObjectPool_NsDisplay)
@@ -44,9 +53,13 @@ ANsDisplay* AObjectPoolSystem::GetPooledObject_NsDisplay()
         }
     }
 
-    return nullptr;
+    return GetAddtionalObject_NsDisplay();
 }
 
+/// <summary>
+/// 사용가능한 풀이 없을 경우
+/// </summary>
+/// <returns>추가 액터</returns>
 ANsDisplay* AObjectPoolSystem::GetAddtionalObject_NsDisplay()
 {
     ANsDisplay* addtionalNewNsDisplay = GetWorld()->SpawnActor<ANsDisplay>(PoolTargetClass_NsDisplay);
@@ -55,6 +68,10 @@ ANsDisplay* AObjectPoolSystem::GetAddtionalObject_NsDisplay()
     return addtionalNewNsDisplay;
 }
 
+/// <summary>
+/// 액터 사용완료 후, 풀로 반환
+/// </summary>
+/// <param name="Ns_Display"></param>
 void AObjectPoolSystem::ReturnPooledObject_NsDisplay(ANsDisplay* Ns_Display)
 {
     Ns_Display->SetActorHiddenInGame(true);
