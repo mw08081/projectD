@@ -21,3 +21,12 @@ void ULvObjectRoot::BeginPlay()
 
 }
 
+void ULvObjectRoot::SetCanBeStack(bool _CanBeStack)
+{
+	CanBeStack = _CanBeStack;
+}
+bool ULvObjectRoot::GetCanBeStack() 
+{
+	return CanBeStack;
+}
+

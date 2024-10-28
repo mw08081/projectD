@@ -34,4 +34,13 @@ public:
 		EObjectType objectType;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int32 objectPrice;
+private:
+	bool CanBeStack = true;
+
+public:
+	UFUNCTION(BlueprintCallable)
+	void SetCanBeStack(bool _CanBeStack);
+	UFUNCTION(BlueprintCallable)
+	bool GetCanBeStack();
+private:
 };
