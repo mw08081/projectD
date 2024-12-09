@@ -1,0 +1,183 @@
+# Fill out your copyright notice in the Description page of Project Settings.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Game\n"
+"POT-Creation-Date: 2024-12-09 13:15\n"
+"PO-Revision-Date: 2024-12-09 22:34+0900\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ko_KR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.5\n"
+
+#. Key:	CE46131940E93583FC39888F7BEAF402
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/tmp/WB_tmpOption.WB_tmpOption_C:WidgetTree.TextBlock.Text
+#: /Game/System/UI/WidetBlueprint/tmp/WB_tmpOption.WB_tmpOption_C:WidgetTree.TextBlock.Text
+msgctxt ",CE46131940E93583FC39888F7BEAF402"
+msgid "Continue"
+msgstr "계속하기"
+
+#. Key:	5DBE9B624A185FB788EAD2A3200C364F
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/tmp/WB_tmpOption.WB_tmpOption_C:WidgetTree.TextBlock_354.Text
+#: /Game/System/UI/WidetBlueprint/tmp/WB_tmpOption.WB_tmpOption_C:WidgetTree.TextBlock_354.Text
+msgctxt ",5DBE9B624A185FB788EAD2A3200C364F"
+msgid "Restart"
+msgstr "재시작"
+
+#. Key:	2DDCD5F64890CFAECA68A38CD79399C2
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/tmp/WB_tmpOption.WB_tmpOption_C:WidgetTree.TextBlock_459.Text
+#: /Game/System/UI/WidetBlueprint/tmp/WB_tmpOption.WB_tmpOption_C:WidgetTree.TextBlock_459.Text
+msgctxt ",2DDCD5F64890CFAECA68A38CD79399C2"
+msgid "Main Menu"
+msgstr "메인 메뉴"
+
+#. Key:	079C986F4D3299E7D98C31843CADDE1C
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/tmp/WB_tmpOption.WB_tmpOption_C:WidgetTree.TXT_Paused.Text
+#: /Game/System/UI/WidetBlueprint/tmp/WB_tmpOption.WB_tmpOption_C:WidgetTree.TXT_Paused.Text
+msgctxt ",079C986F4D3299E7D98C31843CADDE1C"
+msgid "- Paused -"
+msgstr "멈춤"
+
+#. Key:	69F0388344A49F7759C05B80D5FF15EA
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/WB_Ending.WB_Ending_C:WidgetTree.TextBlock_459.Text
+#: /Game/System/UI/WidetBlueprint/WB_Ending.WB_Ending_C:WidgetTree.TextBlock_459.Text
+msgctxt ",69F0388344A49F7759C05B80D5FF15EA"
+msgid "Exit"
+msgstr "나가기"
+
+#. Key:	692F2E97446D132153B7D884A006DEF4
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/WB_Ending.WB_Ending_C:WidgetTree.Txt_Clear.Text
+#: /Game/System/UI/WidetBlueprint/WB_Ending.WB_Ending_C:WidgetTree.Txt_Clear.Text
+msgctxt ",692F2E97446D132153B7D884A006DEF4"
+msgid "- Clear -"
+msgstr "클리어"
+
+#. Key:	146B92824EC0EB490BB26D8C8323E095
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/WB_Ingame.WB_Ingame_C:WidgetTree.txtDestroyedPercentage.Text
+#: /Game/System/UI/WidetBlueprint/WB_Ingame.WB_Ingame_C:WidgetTree.txtDestroyedPercentage.Text
+msgctxt ",146B92824EC0EB490BB26D8C8323E095"
+msgid "0"
+msgstr "0"
+
+#. Key:	2FBEE0404E8EB651F23E67BA02494388
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/WB_Level.WB_Level_C:WidgetTree.TextBlock_548.Text
+#: /Game/System/UI/WidetBlueprint/WB_Level.WB_Level_C:WidgetTree.TextBlock_548.Text
+msgctxt ",2FBEE0404E8EB651F23E67BA02494388"
+msgid "          PLAY          "
+msgstr "          시작          "
+
+#. Key:	4A6F2F4347C1FE4D0300028EED72F4AD
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/WB_Level.WB_Level_C:WidgetTree.TextBlock_652.Text
+#: /Game/System/UI/WidetBlueprint/WB_Level.WB_Level_C:WidgetTree.TextBlock_652.Text
+msgctxt ",4A6F2F4347C1FE4D0300028EED72F4AD"
+msgid "BACK"
+msgstr "뒤로가기"
+
+#. Key:	5C8DA5224B49CAABD65D33B805D2347D
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/WB_Option.WB_Option_C:WidgetTree.TextBlock.Text
+#: /Game/System/UI/WidetBlueprint/WB_Option.WB_Option_C:WidgetTree.TextBlock.Text
+msgctxt ",5C8DA5224B49CAABD65D33B805D2347D"
+msgid "Quit"
+msgstr "나가기"
+
+#. Key:	EF7D05FF423787C4C312988F77FDD26C
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/WB_Option.WB_Option_C:WidgetTree.TextBlock_1.Text
+#: /Game/System/UI/WidetBlueprint/WB_Option.WB_Option_C:WidgetTree.TextBlock_1.Text
+msgctxt ",EF7D05FF423787C4C312988F77FDD26C"
+msgid "Language"
+msgstr "언어"
+
+#. Key:	DACE8E154BB54D1FA7B0888A0C7FAECB
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/WB_Option.WB_Option_C:WidgetTree.TextBlock_139.Text
+#: /Game/System/UI/WidetBlueprint/WB_Option.WB_Option_C:WidgetTree.TextBlock_139.Text
+msgctxt ",DACE8E154BB54D1FA7B0888A0C7FAECB"
+msgid "Apply"
+msgstr "적용"
+
+#. Key:	C3483E2643FD9F2849959495CB0DCB25
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/WB_Option.WB_Option_C:WidgetTree.TextBlock_199.Text
+#: /Game/System/UI/WidetBlueprint/WB_Option.WB_Option_C:WidgetTree.TextBlock_199.Text
+msgctxt ",C3483E2643FD9F2849959495CB0DCB25"
+msgid "Resolution"
+msgstr "해상도"
+
+#. Key:	B97456BE4DA5D660380E2D87B5FFC652
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/WB_Option.WB_Option_C:WidgetTree.TextBlock_270.Text
+#: /Game/System/UI/WidetBlueprint/WB_Option.WB_Option_C:WidgetTree.TextBlock_270.Text
+msgctxt ",B97456BE4DA5D660380E2D87B5FFC652"
+msgid "Back"
+msgstr "뒤로가기"
+
+#. Key:	5F7D4FB6414CB50D0BC6828B9587F22C
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/WB_Play.WB_Play_C:WidgetTree.TextBlock.Text
+#: /Game/System/UI/WidetBlueprint/WB_Play.WB_Play_C:WidgetTree.TextBlock.Text
+msgctxt ",5F7D4FB6414CB50D0BC6828B9587F22C"
+msgid "Stages"
+msgstr "스테이지"
+
+#. Key:	B7B71437456558C1B85EBAB139FC8372
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/WB_Play.WB_Play_C:WidgetTree.TextBlock_1.Text
+#: /Game/System/UI/WidetBlueprint/WB_Play.WB_Play_C:WidgetTree.TextBlock_1.Text
+msgctxt ",B7B71437456558C1B85EBAB139FC8372"
+msgid "Back"
+msgstr "뒤로가기"
+
+#. Key:	1BEAF1BC41CABB22359D12A86E674F9A
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/WB_Play.WB_Play_C:WidgetTree.TextBlock_2.Text
+#: /Game/System/UI/WidetBlueprint/WB_Play.WB_Play_C:WidgetTree.TextBlock_2.Text
+msgctxt ",1BEAF1BC41CABB22359D12A86E674F9A"
+msgid "        PLAY       "
+msgstr "        시작       "
+
+#. Key:	C65D481D43A1B6A3BDE87990DA25D829
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/WB_Play.WB_Play_C:WidgetTree.TextBlock_4.Text
+#: /Game/System/UI/WidetBlueprint/WB_Play.WB_Play_C:WidgetTree.TextBlock_4.Text
+msgctxt ",C65D481D43A1B6A3BDE87990DA25D829"
+msgid "        Story       "
+msgstr "        스토리       "
+
+#. Key:	90633F6A4E3B40470C8F399B174B5F43
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/WB_Title.WB_Title_C:WidgetTree.TextBlock.Text
+#: /Game/System/UI/WidetBlueprint/WB_Title.WB_Title_C:WidgetTree.TextBlock.Text
+msgctxt ",90633F6A4E3B40470C8F399B174B5F43"
+msgid "PLAY"
+msgstr "시작"
+
+#. Key:	9238E2114388D83B3A63B5AA4889BB86
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/WB_Title.WB_Title_C:WidgetTree.TextBlock_1.Text
+#: /Game/System/UI/WidetBlueprint/WB_Title.WB_Title_C:WidgetTree.TextBlock_1.Text
+msgctxt ",9238E2114388D83B3A63B5AA4889BB86"
+msgid "Quit"
+msgstr "나가기"
+
+#. Key:	BC55F0D54BED12599BAF35AC379970F3
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/WB_Title.WB_Title_C:WidgetTree.TextBlock_2.Text
+#: /Game/System/UI/WidetBlueprint/WB_Title.WB_Title_C:WidgetTree.TextBlock_2.Text
+msgctxt ",BC55F0D54BED12599BAF35AC379970F3"
+msgid "How To Play"
+msgstr "조작법"
+
+#. Key:	DE44A36740D36FE808F0058618E59CBE
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/WB_Title.WB_Title_C:WidgetTree.TextBlock_3.Text
+#: /Game/System/UI/WidetBlueprint/WB_Title.WB_Title_C:WidgetTree.TextBlock_3.Text
+msgctxt ",DE44A36740D36FE808F0058618E59CBE"
+msgid "Credit"
+msgstr "크래딧"
+
+#. Key:	3AC96ACE42E0B97F4F69E586D6C0991F
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/WB_Title.WB_Title_C:WidgetTree.TextBlock_4.Text
+#: /Game/System/UI/WidetBlueprint/WB_Title.WB_Title_C:WidgetTree.TextBlock_4.Text
+msgctxt ",3AC96ACE42E0B97F4F69E586D6C0991F"
+msgid "Option"
+msgstr "옵션"
+
+#. Key:	02430FBD4D790D0374AE0DBB95EC3291
+#. SourceLocation:	/Game/System/UI/WidetBlueprint/WB_Title.WB_Title_C:WidgetTree.TextBlock_5.Text
+#: /Game/System/UI/WidetBlueprint/WB_Title.WB_Title_C:WidgetTree.TextBlock_5.Text
+msgctxt ",02430FBD4D790D0374AE0DBB95EC3291"
+msgid "Level Editor"
+msgstr "레벨 에디터"
