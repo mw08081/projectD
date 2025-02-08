@@ -65,6 +65,19 @@ void AProjectD_DefaultGameMode::CalcAllObjectPriceInWorld()
 	UE_LOG(LogTemp, Display, TEXT("Total : %d, phase 1 : %d , phase 2: %d"), TotalObjectPrice, Phase1_ClearScore, Phase2_ClearScore);
 }
 
+void AProjectD_DefaultGameMode::CheckClearCondition()
+{
+	if (CurScore > Phase1_ClearScore) {
+
+	}
+	else if (CurScore >= Phase2_ClearScore) {
+
+	}
+	else if (CurScore >= TotalObjectPrice) {
+
+	}
+}
+
 /// <summary>
 /// 점수 획득, 보간 트리거 
 /// </summary>

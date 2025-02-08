@@ -6,6 +6,16 @@
 #include "GameFramework/GameModeBase.h"
 #include "ProjectD_DefaultGameMode.generated.h"
 
+
+UENUM(BlueprintType)
+enum class EAngerMode : uint8
+{
+    Angry     UMETA(DisplayName = "Angry"),
+    Mad       UMETA(DisplayName = "Mad"),
+    Enraged   UMETA(DisplayName = "Enraged")
+};
+
+
 /**
  * 
  */
@@ -34,6 +44,8 @@ private:
 #pragma region Game Condition
 
 public:
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+    EAngerMode AngerMode = EAngerMode::Angry;
     float ElapsedGameTime = 0;
 
     // 클리어 점수 변수
@@ -66,6 +78,9 @@ public:
 private:
     // 클리어 조건 함수
     void CalcAllObjectPriceInWorld();
+
+    // 클리어 조건 확인
+    void CheckClearCondition();
 
     // 점수 보간
     void InterpolateScore(float dt);
