@@ -49,7 +49,7 @@ public:
 private:
     // 클리어 점수 변수
     const float PHASE1_CLEAR_PERCENTAGE = 0.4;
-    const float PHASE2_CLEAR_PERCENTAGE = 0.6;
+    const float PHASE2_CLEAR_PERCENTAGE = 0.65;
 
     // 점수 보간 변수
     const float SCORE_INTERPOL_DURATION_RATE = 0.002f;
