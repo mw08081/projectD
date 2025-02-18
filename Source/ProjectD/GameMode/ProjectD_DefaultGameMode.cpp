@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "GameFramework/WorldSettings.h"
+#include "GameFramework/Character.h"
 #include "TimerManager.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -8,6 +9,7 @@
 
 #include "Component/LvObjectRoot.h"
 #include "System/ObjectPoolSystem.h"
+
 #include "GameMode/ProjectD_DefaultGameMode.h"
 
 
@@ -24,7 +26,39 @@ void AProjectD_DefaultGameMode::BeginPlay()
 
 	GetWorldTimerManager().SetTimer(FadeInHandle, this, &AProjectD_DefaultGameMode::SetCanFadeIn, 2.f, false);
 	InitObjectPool_NsDisplay();
+
+	//InitCharacterMesh();
 }
+
+
+void AProjectD_DefaultGameMode::InitCharacterMesh()
+{
+	ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	if (PlayerCharacter)
+	{
+		// 호출할 함수 이름 지정
+		FName SetAngerMode(TEXT("SetAngerMode"));
+
+		// 플레이어 Pawn에서 UFunction 포인터 찾기
+		UFunction* Function = PlayerCharacter->FindFunction(SetAngerMode);
+		PlayerCharacter->FindFunction(SetAngerMode);
+		if (Function)
+		{
+			UE_LOG(LogTemp, Display, TEXT("Set Anger Mode : %s"), *SetAngerMode.ToString());
+			EAngerMode phase2 = EAngerMode::Mad;
+			PlayerCharacter->ProcessEvent(Function, &phase2);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Error, TEXT("플레이어에서 함수 %s를 찾을 수 없습니다."), *SetAngerMode.ToString());
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("플레이어 Pawn을 찾을 수 없습니다."));
+	}
+}
+
 void AProjectD_DefaultGameMode::SetCanFadeIn()
 {
 	bCanFadeIn = true;
@@ -67,8 +101,30 @@ void AProjectD_DefaultGameMode::CalcAllObjectPriceInWorld()
 
 void AProjectD_DefaultGameMode::CheckClearCondition()
 {
-	if (CurScore > Phase1_ClearScore) {
+	if (CurScore >= Phase1_ClearScore) {
+		ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+		if (PlayerCharacter)
+		{
+			// 호출할 함수 이름 지정
+			FName SetAngerMode(TEXT("SetAngerMode"));
 
+			// 플레이어 Pawn에서 UFunction 포인터 찾기
+			UFunction* Function = PlayerCharacter->FindFunction(SetAngerMode);
+			PlayerCharacter->FindFunction(SetAngerMode);
+			if (Function)
+			{
+				EAngerMode phase2 = EAngerMode::Mad;
+				PlayerCharacter->ProcessEvent(Function, &phase2);
+			}
+			else
+			{
+				UE_LOG(LogTemp, Error, TEXT("플레이어에서 함수 %s를 찾을 수 없습니다."), *SetAngerMode.ToString());
+			}
+		}
+		else
+		{
+			UE_LOG(LogTemp, Error, TEXT("플레이어 Pawn을 찾을 수 없습니다."));
+		}
 	}
 	else if (CurScore >= Phase2_ClearScore) {
 
@@ -112,6 +168,7 @@ void AProjectD_DefaultGameMode::InterpolateScore(float dt)
 
 	//고정된 A to B의 Lerp
 	CurScore = FMath::Lerp(ScoreInterpolStartVal, InterpolTargetScore, ElapsedScoreInterpolTime / ScoreInterpolDuration);
+	CheckClearCondition();
 }
 
 

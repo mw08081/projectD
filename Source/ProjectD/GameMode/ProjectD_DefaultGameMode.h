@@ -44,8 +44,15 @@ private:
 #pragma region Game Condition
 
 public:
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-    EAngerMode AngerMode = EAngerMode::Angry;
+
+    class USkeletaMeshComponent* CharacterMesh;
+    void InitCharacterMesh();
+
+    UPROPERTY(EditDefaultsOnly)
+    TSubclassOf<class AActor> BatClass;
+    AActor* Bat;
+   
+
     float ElapsedGameTime = 0;
 
     // 클리어 점수 변수
