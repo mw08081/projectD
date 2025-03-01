@@ -9,6 +9,7 @@
 
 #include "Component/LvObjectRoot.h"
 #include "System/ObjectPoolSystem.h"
+#include "Actor/FloatingScore.h"
 
 #include "GameMode/ProjectD_DefaultGameMode.h"
 
@@ -28,35 +29,6 @@ void AProjectD_DefaultGameMode::BeginPlay()
 	InitObjectPool_NsDisplay();
 
 	//InitCharacterMesh();
-}
-
-
-void AProjectD_DefaultGameMode::InitCharacterMesh()
-{
-	ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	if (PlayerCharacter)
-	{
-		// 호출할 함수 이름 지정
-		FName SetAngerMode(TEXT("SetAngerMode"));
-
-		// 플레이어 Pawn에서 UFunction 포인터 찾기
-		UFunction* Function = PlayerCharacter->FindFunction(SetAngerMode);
-		PlayerCharacter->FindFunction(SetAngerMode);
-		if (Function)
-		{
-			UE_LOG(LogTemp, Display, TEXT("Set Anger Mode : %s"), *SetAngerMode.ToString());
-			EAngerMode phase2 = EAngerMode::Mad;
-			PlayerCharacter->ProcessEvent(Function, &phase2);
-		}
-		else
-		{
-			UE_LOG(LogTemp, Error, TEXT("플레이어에서 함수 %s를 찾을 수 없습니다."), *SetAngerMode.ToString());
-		}
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("플레이어 Pawn을 찾을 수 없습니다."));
-	}
 }
 
 void AProjectD_DefaultGameMode::SetCanFadeIn()
@@ -134,12 +106,25 @@ void AProjectD_DefaultGameMode::CheckClearCondition()
 	}
 }
 
+void AProjectD_DefaultGameMode::SpawnFloatingScore(FVector Location, int32 Score)
+{
+
+	// 플로팅 스코어 렌더링
+	AFloatingScore* fs = Cast<AFloatingScore>(ObjectPool->GetPooledActor(EPooledActorType::FloatingScore));
+
+	if (fs != nullptr) {
+		fs->Spawn(Location, Score);
+	}
+	
+}
+
 /// <summary>
 /// 점수 획득, 보간 트리거 
 /// </summary>
 /// <param name="price">획득점수</param>
 void AProjectD_DefaultGameMode::GetScore(int32 price)
 {
+
 	// 새로운 보간의 시작 (시작 : 현재점수, 목표 : 현재점수 + price)
 	ScoreInterpolStartVal = CurScore;
 	InterpolTargetScore += price;
@@ -256,13 +241,15 @@ void AProjectD_DefaultGameMode::InitSlowStack()
 
 void AProjectD_DefaultGameMode::InitObjectPool_NsDisplay()
 {
-	ObjectPoolSystem_NsDisplay = GetWorld()->SpawnActor<AObjectPoolSystem>();
-	ObjectPoolSystem_NsDisplay->InitializePool_NsDisplay(PoolTargetClass_NsDisplay, PoolSize_NsDisplay);
+	ObjectPool = GetWorld()->SpawnActor<AObjectPoolSystem>();
+
+	ObjectPool->InitPool(PoolingTargetClasses, PoolingTargetSpawnCounts);
+	ObjectPool->InitializePool_NsDisplay(PoolTargetClass_NsDisplay, PoolSize_NsDisplay);
 }
 
 ANsDisplay* AProjectD_DefaultGameMode::Get_NsDisplay()
 {
-	ANsDisplay* obj = ObjectPoolSystem_NsDisplay->GetPooledObject_NsDisplay();
+	ANsDisplay* obj = ObjectPool->GetPooledObject_NsDisplay();
 	return obj;
 }
 

@@ -44,15 +44,6 @@ private:
 #pragma region Game Condition
 
 public:
-
-    class USkeletaMeshComponent* CharacterMesh;
-    void InitCharacterMesh();
-
-    UPROPERTY(EditDefaultsOnly)
-    TSubclassOf<class AActor> BatClass;
-    AActor* Bat;
-   
-
     float ElapsedGameTime = 0;
 
     // 클리어 점수 변수
@@ -80,6 +71,9 @@ private:
     int32 InterpolTargetScore;
 public:
     // 클리어 조건 함수
+    UFUNCTION(BlueprintCallable)
+    void SpawnFloatingScore(FVector Location, int32 score);
+
     UFUNCTION(BlueprintCallable)
     void GetScore(int32 price);
 private:
@@ -141,9 +135,25 @@ private:
 #pragma region Object Pool
 
 public:
+    UPROPERTY(EditDefaultsOnly, Category = "Pooling")
+    TArray<TSubclassOf<AActor>> PoolingTargetClasses;
+
+    UPROPERTY(EditDefaultsOnly, Category = "Pooling")
+    TArray<int> PoolingTargetSpawnCounts;
+
+protected:
+private:
+
+
+public:
+protected:
+private:
+
+
+public:
     // The object pool
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    class AObjectPoolSystem* ObjectPoolSystem_NsDisplay;
+    class AObjectPoolSystem* ObjectPool;
 private:
     // The class of the pooled actor
     UPROPERTY(EditDefaultsOnly, Category = "Pooling|NsDisplay")

@@ -20,6 +20,54 @@ void AObjectPoolSystem::BeginPlay()
 }
 
 /// <summary>
+/// pool 초기화
+/// </summary>
+/// <param name="ActorClasses"></param>
+/// <param name="spawnCounts"></param>
+void AObjectPoolSystem::InitPool(TArray<TSubclassOf<class AActor>> ActorClasses, TArray<int> SpawnCounts)
+{
+    if (ActorClasses.Num() != SpawnCounts.Num()) {
+        UE_LOG(LogTemp,Error, TEXT("Pool Init Error :TSubclassOf class length != SpawnCount length"))
+        return;
+    }
+
+    for (auto ActorClass : ActorClasses) {
+
+        int32 idx = 0;
+
+        TArray<AActor*> Row;
+        for (int32 i = 0; i < SpawnCounts[idx]; i++) {
+            AActor* Actor = GetWorld()->SpawnActor(ActorClass);
+            Actor->SetActorHiddenInGame(true);
+
+            Row.Add(Actor);
+        }
+        Pool.Add(Row);
+        idx++;
+    }
+}
+
+AActor* AObjectPoolSystem::GetPooledActor(EPooledActorType PooledActorType)
+{
+    uint8 idx = static_cast<uint8>(PooledActorType);
+
+    for (AActor* Actor : Pool[idx]) {
+        if (Actor->IsHidden()) {
+            // make it active
+            Actor->SetActorHiddenInGame(false);
+            Actor->SetActorTickEnabled(true);
+
+            return Actor;
+        }
+    }
+
+    return nullptr;
+}
+
+
+
+
+/// <summary>
 /// 풀 초기화
 /// </summary>
 /// <param name="_PoolTargetClass_NsDisplay"></param>

@@ -61,7 +61,7 @@ void ANsDisplay::CheckReturnCondition(float dt)
 	if (elapsedPlayTime > MAX_RESIDUAL_TIME) {
 		AProjectD_DefaultGameMode* gameMode = Cast<AProjectD_DefaultGameMode>(GetWorld()->GetAuthGameMode());
 		if (gameMode) {
-			gameMode->ObjectPoolSystem_NsDisplay->ReturnPooledObject_NsDisplay(this);
+			gameMode->ObjectPool->ReturnPooledObject_NsDisplay(this);
 			elapsedPlayTime = 0.f;
 		}
 	}

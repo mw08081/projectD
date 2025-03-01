@@ -6,6 +6,14 @@
 #include "GameFramework/Actor.h"
 #include "ObjectPoolSystem.generated.h"
 
+UENUM(BlueprintType)
+enum class EPooledActorType : uint8
+{
+	FloatingScore       UMETA(DisplayName = "FloatingScore"),
+
+	//NsDisplay     UMETA(DisplayName = "NsDisplay"),
+};
+
 UCLASS()
 class PROJECTD_API AObjectPoolSystem : public AActor
 {
@@ -18,6 +26,26 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+#pragma region Auto Pool 
+
+public :
+protected:
+private:
+	TArray<TArray<class AActor*>> Pool;
+
+public:
+	void InitPool(TArray<TSubclassOf<class AActor>> ActorClasses, TArray<int> spawnCounts);
+
+	AActor* GetPooledActor(EPooledActorType PooledActorType);
+	//void ReturnActor()
+protected:
+private:
+	AActor GetAdditionalPooledActor(EPooledActorType PooledActorType);
+
+
+#pragma endregion
+
 
 #pragma region Ns Display Object Pool
 private:
