@@ -3,6 +3,8 @@
 
 #include "Actor/FloatingScore.h"
 #include "Kismet/GameplayStatics.h"
+#include "GameMode/ProjectD_DefaultGameMode.h"
+#include "System/ObjectPoolSystem.h"
 #include "Components/TextRenderComponent.h" 
 
 // Sets default values
@@ -45,6 +47,16 @@ void AFloatingScore::Tick(float DeltaTime)
 		else {
 			ElapasedSpawnTime = 0;
 			IsSpawn = false;
+
+			// Return To Pool // 풀 메소드 사용하지않고, 자체적으로 처리 // 비정형
+			SetActorHiddenInGame(true);
+			 
+			//// 풀에 스폰과 리턴 메소드를 사용할 경우, 좀 더 정형화된 코드 (지저분..)
+			//AProjectD_DefaultGameMode* GameMode = Cast<AProjectD_DefaultGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+
+			//if (GameMode == nullptr) {
+			//	GameMode->ObjectPool->ReturnActor(this);
+			//}
 		}
 	}
 }

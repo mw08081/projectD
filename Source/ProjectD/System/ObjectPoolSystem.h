@@ -38,7 +38,7 @@ public:
 	void InitPool(TArray<TSubclassOf<class AActor>> ActorClasses, TArray<int> spawnCounts);
 
 	AActor* GetPooledActor(EPooledActorType PooledActorType);
-	//void ReturnActor()
+	void ReturnActor(AActor* ReturnedActor);
 protected:
 private:
 	AActor GetAdditionalPooledActor(EPooledActorType PooledActorType);

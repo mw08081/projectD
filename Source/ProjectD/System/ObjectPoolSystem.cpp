@@ -64,6 +64,11 @@ AActor* AObjectPoolSystem::GetPooledActor(EPooledActorType PooledActorType)
     return nullptr;
 }
 
+void AObjectPoolSystem::ReturnActor(AActor* ReturnedActor)
+{
+    ReturnedActor->SetActorHiddenInGame(true);
+}
+
 
 
 
