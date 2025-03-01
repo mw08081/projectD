@@ -47,6 +47,7 @@ public:
 protected:
 private:
 	void Moving(float DeltaTime);
-	void SetDetails(FVector Location);
+	void SetDetails(FVector Location, int32 score);
+	FString FormattingValue(FString Value);
 
 };

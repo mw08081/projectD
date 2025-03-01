@@ -32,16 +32,26 @@ protected:
 public :
 protected:
 private:
+	TArray<TSubclassOf<AActor>> PoolingTargetClasses;
 	TArray<TArray<class AActor*>> Pool;
+	
 
 public:
 	void InitPool(TArray<TSubclassOf<class AActor>> ActorClasses, TArray<int> spawnCounts);
 
 	AActor* GetPooledActor(EPooledActorType PooledActorType);
+
+	/// <summary>
+	/// Deprecated Function 
+	/// use one line code (self return) :
+	/// 
+	///		SetActorHiddenInGame(true);
+	/// </summary>
+	/// <param name="ReturnedActor"></param>
 	void ReturnActor(AActor* ReturnedActor);
 protected:
 private:
-	AActor GetAdditionalPooledActor(EPooledActorType PooledActorType);
+	AActor* GetAdditionalPooledActor(EPooledActorType PooledActorType);
 
 
 #pragma endregion

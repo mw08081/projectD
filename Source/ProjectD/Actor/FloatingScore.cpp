@@ -80,13 +80,32 @@ void AFloatingScore::Spawn(FVector Location, int32 Score)
 	SetActorLocation(Location);
 	SetActorRotation(PlayerDirection.Rotation());
 
-	TextRenderComponent->SetText(FText::FromString(FString::FromInt(Score)));
-	SetDetails(Location);
+	SetDetails(Location, Score);
 }
 
 
-void AFloatingScore::SetDetails(FVector Location)
+void AFloatingScore::SetDetails(FVector Location, int32 Score)
 {
+	FString FScore = FString::FromInt(Score);
+	//FScore = FormattingValue(FScore);
 
+
+	TextRenderComponent->SetText(FText::FromString(FScore));
+}
+
+FString AFloatingScore::FormattingValue(FString Value)
+{
+	TArray<char> FormattedValue;
+
+	int idx = 0;
+	for (int32 i = Value.Len() - 1 ; i >= 0; i--, idx++) {
+		if (idx % 3 == 2) {
+			
+		}
+		else {
+
+		}
+	}
+	return FString();
 }
 

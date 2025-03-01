@@ -31,6 +31,8 @@ void AObjectPoolSystem::InitPool(TArray<TSubclassOf<class AActor>> ActorClasses,
         return;
     }
 
+    // 차후 추가생성을 위한 클래스 저장
+    PoolingTargetClasses = ActorClasses;
     for (auto ActorClass : ActorClasses) {
 
         int32 idx = 0;
@@ -61,12 +63,23 @@ AActor* AObjectPoolSystem::GetPooledActor(EPooledActorType PooledActorType)
         }
     }
 
-    return nullptr;
+    return GetAdditionalPooledActor(PooledActorType);
 }
 
 void AObjectPoolSystem::ReturnActor(AActor* ReturnedActor)
 {
     ReturnedActor->SetActorHiddenInGame(true);
+}
+
+AActor* AObjectPoolSystem::GetAdditionalPooledActor(EPooledActorType PooledActorType)
+{
+    uint8 idx = static_cast<uint8>(PooledActorType);
+
+    // 생성 후 삽입
+    AActor* Actor = GetWorld()->SpawnActor(PoolingTargetClasses[idx]);
+    Pool[idx].Add(Actor);
+
+    return Actor;
 }
 
 
