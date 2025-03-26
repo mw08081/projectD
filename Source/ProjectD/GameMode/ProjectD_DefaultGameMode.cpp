@@ -22,6 +22,8 @@ AProjectD_DefaultGameMode::AProjectD_DefaultGameMode()
 void AProjectD_DefaultGameMode::BeginPlay()
 {
 	Super::BeginPlay();
+
+	UE_LOG(LogTemp, Display, TEXT("GAMEMODE Init"));
 	
 	CalcAllObjectPriceInWorld();
 
