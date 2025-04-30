@@ -108,7 +108,7 @@ private:
     FTimerHandle CoolDownSlowHandle;
 
     const float COOLDOWN_SLOW = 15;
-    const float DURATION_SLOW = 3;
+    const float DURATION_SLOW = 10;
     const float TIMEDILATION_DEFAULT = 1;
     const float TIMEDILATION_SLOW = 0.25;
 
