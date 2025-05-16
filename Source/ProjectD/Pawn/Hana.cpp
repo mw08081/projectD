@@ -19,6 +19,8 @@ void AHana::BeginPlay()
             ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
         {
             SubSystem->AddMappingContext(DefaultMappingContext, 0);
+            UE_LOG(LogTemp, Display, TEXT("Begin play in hana Character"));
+            UE_LOG(LogTemp, Warning, TEXT("DefaultMappingContext: %s"), DefaultMappingContext ? TEXT("Valid") : TEXT("NULL"));
         }
     }
 }
@@ -40,6 +42,8 @@ void AHana::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
             this,
             &AHana::HandleMove
         );
+
+        UE_LOG(LogTemp, Display, TEXT("Bind Action"));
     }
 }
 
