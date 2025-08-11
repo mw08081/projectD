@@ -9,7 +9,8 @@
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
-				"Engine"
+				"Engine",
+				"UMG"
 			]
 		}
 	],
@@ -29,7 +30,7 @@
 			"Name": "NiagaraSimCaching",
 			"Enabled": true
 		},
-		{ 
+		{
 			"Name": "ProceduralMeshComponent",
 			"Enabled": true
 		}
