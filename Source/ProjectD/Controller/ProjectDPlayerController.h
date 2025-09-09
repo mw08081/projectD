@@ -7,7 +7,6 @@
 #include "ProjectDPlayerController.generated.h"
 
 
-
 /**
  * 
  */
@@ -44,6 +43,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void UpdatePBBlowCount(float Value);
+
+	void UpdateTxtScore(int32 Value);
 
 	/*UFUNCTION()
 	void HandlePlayerStateChanged(int32 State);*/

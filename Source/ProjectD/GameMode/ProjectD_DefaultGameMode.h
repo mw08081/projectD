@@ -16,6 +16,7 @@ enum class EAngerMode : uint8
 };
 
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnScoreChanged, APawn*, Instigator);
 /**
  * 
  */
@@ -40,6 +41,9 @@ private:
 
     void SetCanFadeIn();
     void FadeIn(float dt);
+
+public:
+    class AProjectDPlayerController* DefaultPlayerController;
 
 #pragma region Game Condition
 
@@ -76,6 +80,8 @@ public:
 
     UFUNCTION(BlueprintCallable)
     void GetScore(int32 price);
+
+    FOnScoreChanged OnScoreChanged;
 private:
     // 클리어 조건 함수
     void CalcAllObjectPriceInWorld();

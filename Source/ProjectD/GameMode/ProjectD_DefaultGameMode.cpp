@@ -12,6 +12,7 @@
 #include "Actor/FloatingScore.h"
 
 #include "GameMode/ProjectD_DefaultGameMode.h"
+#include "Controller/ProjectDPlayerController.h"
 
 
 AProjectD_DefaultGameMode::AProjectD_DefaultGameMode()
@@ -24,6 +25,14 @@ void AProjectD_DefaultGameMode::BeginPlay()
 	Super::BeginPlay();
 
 	UE_LOG(LogTemp, Display, TEXT("GAMEMODE Init"));
+
+
+	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	if (IsValid(PlayerController))
+	{
+		DefaultPlayerController = Cast<AProjectDPlayerController>(PlayerController);
+	}
+	
 	
 	CalcAllObjectPriceInWorld();
 
@@ -124,12 +133,11 @@ void AProjectD_DefaultGameMode::SpawnFloatingScore(FVector Location, int32 Score
 /// 점수 획득, 보간 트리거 
 /// </summary>
 /// <param name="price">획득점수</param>
-void AProjectD_DefaultGameMode::GetScore(int32 price)
+void AProjectD_DefaultGameMode::GetScore(int32 Price)
 {
-
 	// 새로운 보간의 시작 (시작 : 현재점수, 목표 : 현재점수 + price)
 	ScoreInterpolStartVal = CurScore;
-	InterpolTargetScore += price;
+	InterpolTargetScore += Price;
 
 	// 보간값 초기화
 	ElapsedScoreInterpolTime = 0;
@@ -155,6 +163,8 @@ void AProjectD_DefaultGameMode::InterpolateScore(float dt)
 
 	//고정된 A to B의 Lerp
 	CurScore = FMath::Lerp(ScoreInterpolStartVal, InterpolTargetScore, ElapsedScoreInterpolTime / ScoreInterpolDuration);
+	DefaultPlayerController->UpdateTxtScore(CurScore);
+
 	CheckClearCondition();
 }
 

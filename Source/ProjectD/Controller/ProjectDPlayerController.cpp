@@ -62,23 +62,33 @@ void AProjectDPlayerController::ManageIngameOption()
 
 bool AProjectDPlayerController::UpdatePlayerAttackMode(bool IsSwing)
 {
-	return true;
+	if (IsValid(WB_IngameHUD))
+	{
+		WB_IngameHUD->UpdatePlayerAttackMode(IsSwing);
+	}
+	return IsSwing;
 }
 
 void AProjectDPlayerController::UpdatePBElapsedChargeTime(float Value)
 {
 	if (IsValid(WB_IngameHUD))
 	{
-		WB_IngameHUD->UpdatePBElpasedChargeTime(Value);
+		WB_IngameHUD->UpdateElpasedChargeTime(Value);
 	}
 }
-
-
 
 void AProjectDPlayerController::UpdatePBBlowCount(float Value)
 {
 	if(IsValid(WB_IngameHUD))
 	{
-		WB_IngameHUD->UpdatePBBlowCount(Value);
+		WB_IngameHUD->UpdateBlowCount(Value);
+	}
+}
+
+void AProjectDPlayerController::UpdateTxtScore(int32 Value)
+{
+	if (IsValid(WB_IngameHUD))
+	{
+		WB_IngameHUD->UpdateScore(Value);
 	}
 }
