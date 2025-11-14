@@ -1,5 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+
+#include "GameMode/ProjectD_DefaultGameMode.h"
+
 #include "GameFramework/WorldSettings.h"
 #include "GameFramework/Character.h"
 #include "TimerManager.h"
@@ -11,7 +14,6 @@
 #include "System/ObjectPoolSystem.h"
 #include "Actor/FloatingScore.h"
 
-#include "GameMode/ProjectD_DefaultGameMode.h"
 #include "Controller/ProjectDPlayerController.h"
 
 
