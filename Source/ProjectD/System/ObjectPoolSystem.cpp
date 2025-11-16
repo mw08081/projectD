@@ -16,7 +16,7 @@ AObjectPoolSystem::AObjectPoolSystem()
 void AObjectPoolSystem::BeginPlay()
 {
 	Super::BeginPlay();
-    InitializePool_NsDisplay(PoolTargetClass_NsDisplay, PoolSize_NsDisplay);
+    //InitializePool_NsDisplay(PoolTargetClass_NsDisplay, PoolSize_NsDisplay);
 }
 
 /// <summary>

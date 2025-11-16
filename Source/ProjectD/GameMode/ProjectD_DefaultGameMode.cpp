@@ -11,7 +11,7 @@
 #include "EngineUtils.h"
 
 #include "Component/LvObjectRoot.h"
-#include "System/ObjectPoolSystem.h"
+#include "System/ObjectPoolSubsystem.h"
 #include "Actor/FloatingScore.h"
 
 #include "Controller/ProjectDPlayerController.h"
@@ -38,8 +38,10 @@ void AProjectD_DefaultGameMode::BeginPlay()
 	
 	CalcAllObjectPriceInWorld();
 
-	GetWorldTimerManager().SetTimer(FadeInHandle, this, &AProjectD_DefaultGameMode::SetCanFadeIn, 2.f, false);
-	InitObjectPool_NsDisplay();
+	GetWorldTimerManager().SetTimer(FadeInHandle, this, &AProjectD_DefaultGameMode::SetCanFadeIn, 10.f, false);
+	
+	UObjectPoolSubsystem* ObjectPoolSubsystem = GetWorld()->GetSubsystem<UObjectPoolSubsystem>();
+	ObjectPoolSubsystem->InitObjectPool(ObjectPoolingActorClass);
 
 	//InitCharacterMesh();
 }
@@ -122,12 +124,12 @@ void AProjectD_DefaultGameMode::CheckClearCondition()
 void AProjectD_DefaultGameMode::SpawnFloatingScore(FVector Location, int32 Score)
 {
 
-	// 플로팅 스코어 렌더링
-	AFloatingScore* fs = Cast<AFloatingScore>(ObjectPool->GetPooledActor(EPooledActorType::FloatingScore));
+	//// 플로팅 스코어 렌더링
+	//AFloatingScore* fs = Cast<AFloatingScore>(ObjectPool->GetPooledActor(EPooledActorType::FloatingScore));
 
-	if (fs != nullptr) {
-		fs->Spawn(Location, Score);
-	}
+	//if (fs != nullptr) {
+	//	fs->Spawn(Location, Score);
+	//}
 	
 }
 
@@ -247,29 +249,6 @@ void AProjectD_DefaultGameMode::InitSlowStack()
 {
 	SetCanSlow(false);
 	curSlowStack = 0;
-}
-
-#pragma endregion
-
-#pragma region Object Pool
-
-void AProjectD_DefaultGameMode::InitObjectPool_NsDisplay()
-{
-	ObjectPool = GetWorld()->SpawnActor<AObjectPoolSystem>();
-
-	ObjectPool->InitPool(PoolingTargetClasses, PoolingTargetSpawnCounts);
-	ObjectPool->InitializePool_NsDisplay(PoolTargetClass_NsDisplay, PoolSize_NsDisplay);
-}
-
-ANsDisplay* AProjectD_DefaultGameMode::Get_NsDisplay()
-{
-	ANsDisplay* obj = ObjectPool->GetPooledObject_NsDisplay();
-	return obj;
-}
-
-void AProjectD_DefaultGameMode::Return_NsDisplay(ANsDisplay* _NsDisplay)
-{
-
 }
 
 #pragma endregion

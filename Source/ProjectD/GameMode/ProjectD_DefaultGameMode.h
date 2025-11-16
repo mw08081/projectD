@@ -141,6 +141,14 @@ private:
 #pragma region Object Pool
 
 public:
+    UPROPERTY(EditDefaultsOnly, Category = "ObjectPool")
+    TMap<TSubclassOf<AActor>, int32> ObjectPoolingActorClass;
+
+
+
+
+public:
+
     UPROPERTY(EditDefaultsOnly, Category = "Pooling")
     TArray<TSubclassOf<AActor>> PoolingTargetClasses;
 
@@ -168,12 +176,7 @@ private:
     UPROPERTY(EditDefaultsOnly, Category = "Pooling|NsDisplay")
     int32 PoolSize_NsDisplay;
 
-private:
-    void InitObjectPool_NsDisplay();
-    UFUNCTION(BlueprintCallable)
-    class ANsDisplay* Get_NsDisplay();
-    UFUNCTION(BlueprintCallable)
-    void Return_NsDisplay(class ANsDisplay* _NsDisplay);
+
 #pragma endregion
 
 };
