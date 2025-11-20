@@ -24,3 +24,19 @@ void AFracturedPiece::BeginPlay()
 	
 	Mesh->SetSimulatePhysics(true);
 }
+
+void AFracturedPiece::Activate()
+{
+	SetActorHiddenInGame(false);
+
+	Mesh->SetSimulatePhysics(true);
+	SetActorEnableCollision(true);
+}
+
+void AFracturedPiece::Deactivate()
+{
+	Mesh->SetSimulatePhysics(false);
+
+	SetActorEnableCollision(false);
+	SetActorHiddenInGame(true);
+}

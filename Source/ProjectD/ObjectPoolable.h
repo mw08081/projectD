@@ -7,7 +7,7 @@
 #include "ObjectPoolable.generated.h"
 
 // This class does not need to be modified.
-UINTERFACE(MinimalAPI)
+UINTERFACE(BlueprintType, MinimalAPI)
 class UObjectPoolable : public UInterface
 {
 	GENERATED_BODY()
