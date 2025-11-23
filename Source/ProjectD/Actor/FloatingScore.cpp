@@ -2,10 +2,12 @@
 
 
 #include "Actor/FloatingScore.h"
+
 #include "Kismet/GameplayStatics.h"
-#include "GameMode/ProjectD_DefaultGameMode.h"
-#include "System/ObjectPoolSystem.h"
 #include "Components/TextRenderComponent.h" 
+
+#include "GameMode/ProjectD_DefaultGameMode.h"
+#include "System/ObjectPoolSubsystem.h"
 
 // Sets default values
 AFloatingScore::AFloatingScore()
@@ -45,18 +47,7 @@ void AFloatingScore::Tick(float DeltaTime)
 			Moving(DeltaTime);
 		}
 		else {
-			ElapasedSpawnTime = 0;
-			IsSpawn = false;
-
-			// Return To Pool // 풀 메소드 사용하지않고, 자체적으로 처리 // 비정형
-			SetActorHiddenInGame(true);
-			 
-			//// 풀에 스폰과 리턴 메소드를 사용할 경우, 좀 더 정형화된 코드 (지저분..)
-			//AProjectD_DefaultGameMode* GameMode = Cast<AProjectD_DefaultGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
-
-			//if (GameMode == nullptr) {
-			//	GameMode->ObjectPool->ReturnActor(this);
-			//}
+			ReturnToObjectPoolSubsystem();
 		}
 	}
 }
@@ -70,7 +61,15 @@ void AFloatingScore::Moving(float DeltaTime)
 	SetActorLocation(CurLocation);
 }
 
-void AFloatingScore::Spawn(FVector Location, int32 Score)
+void AFloatingScore::ReturnToObjectPoolSubsystem()
+{
+	UObjectPoolSubsystem* ObjectPoolSubsystem = GetWorld()->GetSubsystem<UObjectPoolSubsystem>();
+	if (ObjectPoolSubsystem == nullptr) return;
+
+	ObjectPoolSubsystem->ReturnObjectToPool(this);
+}
+
+void AFloatingScore::Init(FVector Location, int32 Score)
 {
 	IsSpawn = true;
 
@@ -83,12 +82,26 @@ void AFloatingScore::Spawn(FVector Location, int32 Score)
 	SetDetails(Location, Score);
 }
 
+void AFloatingScore::Activate()
+{
+	IsSpawn = true;
+
+	SetActorHiddenInGame(false);
+}
+
+void AFloatingScore::Deactivate()
+{
+	IsSpawn = false;
+	ElapasedSpawnTime = 0;
+
+	SetActorHiddenInGame(true);
+}
+
 
 void AFloatingScore::SetDetails(FVector Location, int32 Score)
 {
 	FString FScore = FString::FromInt(Score);
 	//FScore = FormattingValue(FScore);
-
 
 	TextRenderComponent->SetText(FText::FromString(FScore));
 }

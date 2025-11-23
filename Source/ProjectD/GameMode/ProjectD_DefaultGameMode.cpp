@@ -76,7 +76,7 @@ void AProjectD_DefaultGameMode::CalcAllObjectPriceInWorld()
 		//액터 내의 lvObjectRoot 회수
 		ULvObjectRoot* lvObjectRoot = ActorPtr->FindComponentByClass<ULvObjectRoot>();
 		if (lvObjectRoot != nullptr) {
-			UE_LOG(LogTemp, Display, TEXT("%s price %d"), *(ActorPtr->GetName()), lvObjectRoot->objectPrice);
+			//UE_LOG(LogTemp, Display, TEXT("%s price %d"), *(ActorPtr->GetName()), lvObjectRoot->objectPrice);
 			TotalObjectPrice += lvObjectRoot->objectPrice;
 		} 
 	}
@@ -123,6 +123,8 @@ void AProjectD_DefaultGameMode::CheckClearCondition()
 
 void AProjectD_DefaultGameMode::SpawnFloatingScore(FVector Location, int32 Score)
 {
+	// get from subsystem
+
 
 	//// 플로팅 스코어 렌더링
 	//AFloatingScore* fs = Cast<AFloatingScore>(ObjectPool->GetPooledActor(EPooledActorType::FloatingScore));

@@ -4,10 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+
+#include "ObjectPoolable.h"
+
 #include "FloatingScore.generated.h"
 
 UCLASS()
-class PROJECTD_API AFloatingScore : public AActor
+class PROJECTD_API AFloatingScore : public AActor, public IObjectPoolable
 {
 	GENERATED_BODY()
 	
@@ -43,10 +46,19 @@ private:
 	float ElapasedSpawnTime = 0.0;
 
 public:
-	void Spawn(FVector Location, int32 score);
+	UFUNCTION(BlueprintCallable)
+	void Init(FVector Location, int32 score);
+	
+	UFUNCTION(BlueprintCallable)
+	virtual void Activate() override;
+
+	UFUNCTION(BlueprintCallable)
+	virtual void Deactivate() override;
 protected:
 private:
 	void Moving(float DeltaTime);
+	void ReturnToObjectPoolSubsystem();
+
 	void SetDetails(FVector Location, int32 score);
 	FString FormattingValue(FString Value);
 
