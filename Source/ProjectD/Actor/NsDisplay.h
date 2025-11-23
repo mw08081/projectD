@@ -4,10 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+
+#include "ObjectPoolable.h"
+
 #include "NsDisplay.generated.h"
 
 UCLASS()
-class PROJECTD_API ANsDisplay : public AActor
+class PROJECTD_API ANsDisplay : public AActor, public IObjectPoolable
 {
 	GENERATED_BODY()
 	
@@ -34,9 +37,16 @@ private:
 
 public:
 	UFUNCTION(BlueprintCallable)
-	void SetNs(class UNiagaraSystem* ns);
-	void InitNs();
+	void SetNs(class UNiagaraSystem* ns, FVector Location);
+
+	void ReturnToObjectPoolSubsystem();
 	void CheckReturnCondition(float dt);
+
+	UFUNCTION(BlueprintCallable)
+	virtual void Activate() override;
+	UFUNCTION(BlueprintCallable)
+	virtual void Deactivate() override;
+
 
 	void SetIsActive(bool _bIsActive);
 	bool GetIsActive();

@@ -2,10 +2,13 @@
 
 
 #include "Actor/NsDisplay.h"
+
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraComponent.h"
+
 #include "GameMode/ProjectD_DefaultGameMode.h"
-#include "System/ObjectPoolSystem.h"
+#include "System/ObjectPoolSubsystem.h"
+
 
 // Sets default values
 ANsDisplay::ANsDisplay()
@@ -34,10 +37,12 @@ void ANsDisplay::Tick(float DeltaTime)
 	}
 }
 
-void ANsDisplay::SetNs(UNiagaraSystem* ns)
+void ANsDisplay::SetNs(UNiagaraSystem* ns, FVector Location)
 {
 	nsComponent->SetAsset(ns);
 	nsComponent->Activate();
+
+	SetActorLocation(Location);
 
 	SetIsActive(true);
 }
@@ -45,26 +50,40 @@ void ANsDisplay::SetNs(UNiagaraSystem* ns)
 /// <summary>
 /// Niagara System 비활성화
 /// </summary>
-void ANsDisplay::InitNs()
+void ANsDisplay::ReturnToObjectPoolSubsystem()
 {
-	nsComponent->Deactivate();
-	//elapsedPlayTime = 0;
+	UObjectPoolSubsystem* ObjectPoolSubsystem = GetWorld()->GetSubsystem<UObjectPoolSubsystem>();
+	if (ObjectPoolSubsystem == nullptr) return;
+
+	ObjectPoolSubsystem->ReturnObjectToPool(this);
 }
 
 void ANsDisplay::CheckReturnCondition(float dt)
 {
 	elapsedPlayTime += dt;
+
+	// 1. fade out 
 	if (elapsedPlayTime > MAX_PLAY_TIME) {
-		InitNs();
+		nsComponent->Deactivate();
 	}
 
+	// 2. return
 	if (elapsedPlayTime > MAX_RESIDUAL_TIME) {
-		AProjectD_DefaultGameMode* gameMode = Cast<AProjectD_DefaultGameMode>(GetWorld()->GetAuthGameMode());
-		if (gameMode) {
-			gameMode->ObjectPool->ReturnPooledObject_NsDisplay(this);
-			elapsedPlayTime = 0.f;
-		}
+		ReturnToObjectPoolSubsystem();
 	}
+}
+
+void ANsDisplay::Activate()
+{
+	SetActorHiddenInGame(false);
+}
+
+void ANsDisplay::Deactivate()
+{
+	SetActorHiddenInGame(true);
+
+	nsComponent->Deactivate();
+	elapsedPlayTime = 0;
 }
 
 void ANsDisplay::SetIsActive(bool _bIsActive)
