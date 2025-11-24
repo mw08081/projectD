@@ -23,25 +23,12 @@ void UObjectPoolSubsystem::Deinitialize()
 
 void UObjectPoolSubsystem::InitObjectPool(TMap<TSubclassOf<AActor>, int32> ObjectPoolingActorClass)
 {
-	FActorSpawnParameters params = FActorSpawnParameters();
-	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
 	for (auto& e : ObjectPoolingActorClass)
 	{
 		ObjectPool.Add(e.Key, TArray<AActor*>());
 		for (auto i = 0; i < e.Value; i++)
 		{
-			AActor* Actor = GetWorld()->SpawnActor<AActor>(e.Key, FVector::ZeroVector, FRotator::ZeroRotator, params);
-			if (Actor && Actor->GetClass()->ImplementsInterface(UObjectPoolable::StaticClass()))
-			{
-				IObjectPoolable* Poolable = Cast<IObjectPoolable>(Actor);
-				if (Poolable)
-				{
-					Poolable->Deactivate(); 
-				}
-
-				ObjectPool[e.Key].Add(Actor);
-			}
+			CreateObject(e.Key);
 		}
 	}
 }
@@ -50,8 +37,14 @@ TScriptInterface<IObjectPoolable> UObjectPoolSubsystem::RequestObjectFromPool(UC
 {
 	TScriptInterface<IObjectPoolable> Result;
 
-	if (ObjectPool.Contains(ActorClass) && ObjectPool[ActorClass].Num() > 0)
+	if (ObjectPool.Contains(ActorClass))
 	{
+		if (ObjectPool[ActorClass].Num() < 1)
+		{
+			UE_LOG(LogTemp, Display, TEXT("There is no Object. Need to create more object!"));
+			CreateObject(ActorClass);
+		}
+
 		AActor* Actor = ObjectPool[ActorClass].Pop();
 		if (Actor && Actor->GetClass()->ImplementsInterface(UObjectPoolable::StaticClass()))
 		{
@@ -84,4 +77,22 @@ void UObjectPoolSubsystem::ReturnObjectToPool(TScriptInterface<IObjectPoolable> 
 	ObjectPool[ActorClass].Add(Actor);
 
 	PoolableActor.GetInterface()->Deactivate();
+}
+
+void UObjectPoolSubsystem::CreateObject(UClass* ActorClass)
+{
+	FActorSpawnParameters params = FActorSpawnParameters();
+	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+	AActor* Actor = GetWorld()->SpawnActor<AActor>(ActorClass, FVector::ZeroVector, FRotator::ZeroRotator, params);
+	if (Actor && Actor->GetClass()->ImplementsInterface(UObjectPoolable::StaticClass()))
+	{
+		IObjectPoolable* Poolable = Cast<IObjectPoolable>(Actor);
+		if (Poolable)
+		{
+			Poolable->Deactivate();
+		}
+
+		ObjectPool[ActorClass].Add(Actor);
+	}
 }

@@ -47,9 +47,6 @@ void ANsDisplay::SetNs(UNiagaraSystem* ns, FVector Location)
 	SetIsActive(true);
 }
 
-/// <summary>
-/// Niagara System 비활성화
-/// </summary>
 void ANsDisplay::ReturnToObjectPoolSubsystem()
 {
 	UObjectPoolSubsystem* ObjectPoolSubsystem = GetWorld()->GetSubsystem<UObjectPoolSubsystem>();

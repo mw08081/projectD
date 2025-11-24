@@ -33,5 +33,5 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ReturnObjectToPool(TScriptInterface<IObjectPoolable> PoolableActor);
 
-
+	void CreateObject(UClass* ActorClass);
 };
