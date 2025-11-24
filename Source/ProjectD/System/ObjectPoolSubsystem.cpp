@@ -88,7 +88,7 @@ void UObjectPoolSubsystem::CreateObject(UClass* ActorClass)
 	if (Actor && Actor->GetClass()->ImplementsInterface(UObjectPoolable::StaticClass()))
 	{
 		IObjectPoolable* Poolable = Cast<IObjectPoolable>(Actor);
-		if (Poolable)
+		if (Poolable) 
 		{
 			Poolable->Deactivate();
 		}
