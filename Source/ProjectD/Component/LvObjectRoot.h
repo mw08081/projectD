@@ -13,7 +13,8 @@ enum class EObjectType : uint8
 	Static				UMETA(DisplayName = "Static"),
 	FracturingObject	UMETA(DisplayName = "FracturingObject"),
 	ConvertingObject	UMETA(DisplayName = "ConvertingObject"),
-	DisappearingObject	UMETA(DisplayName = "DisappearingObject")
+	DisappearingObject	UMETA(DisplayName = "DisappearingObject"),
+	HugeDestructibleObject	UMETA(DisplayName = "HugeDestructibleObject")
 };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
