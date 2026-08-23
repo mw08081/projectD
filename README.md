@@ -283,7 +283,7 @@ Geometry Collection 생성
 - 피직스 바디 깨우기(수정)
 - Geomoetry Collection과의 콜리젼 발생(수정)
 
-코드
+코드  
 <img width="719" height="300" alt="image" src="https://github.com/user-attachments/assets/e3dff8d2-1524-4125-bfdb-24ec1e68c97e" />
 
 구현결과
@@ -319,7 +319,7 @@ Geometry Collection 생성
 - Update Vertex Position 코드 : [https://blueprintue.com/blueprint/ak95lnla/](https://blueprintue.com/blueprint/ak95lnla/)
 
 
-구현결과. 
+구현결과  
 <img width="654" height="407" alt="Image" src="https://github.com/user-attachments/assets/d7eb397c-7a07-4e73-9f4f-09e607ef942f" />
 
 실시간으로 변형되는 Procedural Mesh
