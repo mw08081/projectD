@@ -99,25 +99,23 @@ void AObjectPoolSystem::ReturnPooledObject_NsDisplay(ANsDisplay* Ns_Display)
 
 구현결과
 
-<img width="250" height="210" alt="image" src="https://github.com/user-attachments/assets/ffd070cf-a045-42c2-a139-437ecff5b3fa" />  
-게임 시작 시, 미리 풀이 형성  
+<img width="250" height="210" alt="image" src="https://github.com/user-attachments/assets/ffd070cf-a045-42c2-a139-437ecff5b3fa" />
 
-<img width="816" height="378" alt="image" src="https://github.com/user-attachments/assets/6159439b-2dca-4e9a-8e01-18b26bea442e" />  
+게임 시작 시, 미리 풀이 형성    
+  
+<img width="816" height="378" alt="image" src="https://github.com/user-attachments/assets/6159439b-2dca-4e9a-8e01-18b26bea442e" />
+
 액터 요청 시 레벨에 표시 ➡️ 일정시간 이후 회수  
 
 ---
 
 ### II. 점수증가 feat. Lerp
 
-<aside>
-✨
 
 구현목표 
-
 - 점수 증가의 표현을 시각적으로 표현
 
 구현방법 
-
 - Lerp함수를 이용하여 점수 증가를 시각적으로 표현
 - 최대/최소값을 기반으로 작은 값은 최솟값으로, 큰 값은 최댓값으로 제한
 
@@ -169,51 +167,41 @@ void AProjectD_DefaultGameMode::InterpolateScore(float dt)
 }
 ```
 
-구현결과
+구현결과  
+<img width="763" height="394" alt="image" src="https://github.com/user-attachments/assets/baa21806-874d-4c50-ad87-32769581c0df" />
+<img width="763" height="394" alt="image" src="https://github.com/user-attachments/assets/e4c5c43a-0ca4-4099-8e73-e3486eff7ad8" />
 
-![lerp 1.gif](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/lerp_1.gif)
-
-![l2.gif](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/l2.gif)
-
-</aside>
 
 ### III. 벡터의 내적을 이용하여 액터를 던지는 각도 계산
 
-<aside>
-✨
-
 구현목표 
-
 - 액터를 던지는 각도에 따라 Directinal Mag의 크기 조절 구현
 
 구현방법 
-
 - 플레이어의 Forward Vector와 카메라 Forward Vector의 내적을 이용하여 던지는 각도 계산
 - 각도에 따라 Directional Mag 감소 여부 확인
 
 코드
 
-![플레이어의 Forward Vector와 카메라 Forward Vector의 내적을 이용하여 던지는 각도 계산](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%201.png)
+<img width="639" height="253" alt="image" src="https://github.com/user-attachments/assets/2923be71-903f-4ca9-8903-d04fd204f113" />
 
 플레이어의 Forward Vector와 카메라 Forward Vector의 내적을 이용하여 던지는 각도 계산
 
-![image.png](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%202.png)
+<img width="468" height="238" alt="image" src="https://github.com/user-attachments/assets/150909a4-58d5-4217-98da-4a6eebc80aaf" />
 
-![각도에 따라 Directional Mag 감소 여부 확](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%203.png)
+<img width="588" height="286" alt="image" src="https://github.com/user-attachments/assets/fd576d55-eb44-48af-ac57-cb16b9c7d491" />
 
-각도에 따라 Directional Mag 감소 여부 확
+각도에 따라 Directional Mag 감소 여부 확정
 
 구현결과
 
-![파편 분산 정도(Directional Magnitude) 정상적용](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/th_1.gif)
+<img width="654" height="407" alt="image" src="https://github.com/user-attachments/assets/aad7f2eb-6321-4bc5-b96e-62839c7af0a7" />
 
 파편 분산 정도(Directional Magnitude) 정상적용
 
-![파편 분산 정도(Directional Magnitude) 감소](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/th2.gif)
+<img width="654" height="407" alt="image" src="https://github.com/user-attachments/assets/78206b39-1866-48b7-8501-bd4be5c9b08c" />
 
 파편 분산 정도(Directional Magnitude) 감소
-
-</aside>
 
 ---
 
