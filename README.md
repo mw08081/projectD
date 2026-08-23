@@ -17,9 +17,9 @@
 ## 기술설명
 
 구현 기술에 대한 설명이 필요한 주된 메커니즘들을 설명합니다
-- 기반시스템
-- Chaos Physics Engine
-- Procedural Mesh
+- [기반시스템](https://github.com/mw08081/projectD/blob/dev/README.md#%EA%B8%B0%EB%B0%98-%EC%8B%9C%EC%8A%A4%ED%85%9C)
+- [Chaos Physics Engine]()
+- [Procedural Mesh]()
 
 ### 기반 시스템
 
@@ -205,111 +205,86 @@ void AProjectD_DefaultGameMode::InterpolateScore(float dt)
 
 ---
 
-## Chaos Physics Engine
+### Chaos Physics Engine
 
-### I. Fracture System
-
-<aside>
-✨
+#### I. Fracture System
 
 구현목표 
-
 - Static Mesh와 다르게 부숴지는 액터를 카오스 물리엔진으로 표현
 
 구현방법 
-
 - 프렉쳐 시스템을 이용하여 Geometry Collection 생성
 - Convex 콜리전을 세밀하게 조정
 
-![총 23조각으로 Fracture 적용, Geometry Collection의 엉성한 Convex 콜리젼](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%204.png)
+<img width="885" height="558" alt="image" src="https://github.com/user-attachments/assets/3acf918c-478d-4206-8045-d022238edc63" />
 
 총 23조각으로 Fracture 적용, Geometry Collection의 엉성한 Convex 콜리젼
 
-![image.png](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%205.png)
+<img width="624" height="227" alt="image" src="https://github.com/user-attachments/assets/a5ef981c-b7d4-4d8c-b370-4b99c5c9a06e" />
 
-![image.png](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%206.png)
-
-구현결과
+구현결과  
 
 - 머그컵 데미지 임계점 : 3,000
-
-![좌 데미지: 2000, 우 데미지: 5000](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/fracture.gif)
+<img width="451" height="313" alt="image" src="https://github.com/user-attachments/assets/b027b5f5-ad7d-4cf5-ac3c-304190e63aca" />
 
 좌 데미지: 2000, 우 데미지: 5000
 
-</aside>
 
 ---
 
-### II. Geometry Collecion - Set Actor Location 의 한계
-
-<aside>
-✨
+#### II. Geometry Collecion - Set Actor Location 의 한계
 
 구현목표 
-
 - Set Actor Location 이 안 되기 때문에, 물건을 집어 던지는 행위에 제한 발생
-    
     ➡️ 던질 수 있도록 구현
     
 
 구현방법 
-
 - 액터 이동 필요 시 Static Mesh 모델 사용
 - 던져서 충돌 시 Geometry Collection과 Master Field를 생성하여 파괴
 
 코드
 
-![Master Field 생성 (추후 오브젝트 풀링 적용)](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%207.png)
+<img width="866" height="426" alt="image" src="https://github.com/user-attachments/assets/09e52e82-c5dc-4201-aeba-dcc212d749ac" />
 
 Master Field 생성 (추후 오브젝트 풀링 적용)
 
 ---
-
-![Geometry Collection 생성](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%208.png)
+<img width="692" height="547" alt="image" src="https://github.com/user-attachments/assets/0193f9e4-3017-4289-80ca-47668b61e395" />
 
 Geometry Collection 생성
 
-구현결과
+구현결과  
 
-![던져지는 순간 Static Mesh 사용 ➡️ 부딪히는 순간부터 Geometry Collection 사용](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/throwing.gif)
+<img width="451" height="313" alt="image" src="https://github.com/user-attachments/assets/7ae99be8-45ca-4487-928c-bcbcf3554e8b" />
 
 던져지는 순간 Static Mesh 사용 ➡️ 부딪히는 순간부터 Geometry Collection 사용
 
-</aside>
 
 ---
 
-### III. Field System - Bomb Field
+#### III. Field System - Bomb Field
 
-<aside>
-✨
 
 구현목표 
-
 - Fracture System 뿐만 아니라 Static Mesh에도 영향을 줄 수 있도록 구현
 
 구현방법 
-
 - Static Mesh 액터와 Geometry Collection액터에 Field System에 대한 Overlap Event 추가
 - 피직스 바디 깨우기(수정)
 - Geomoetry Collection과의 콜리젼 발생(수정)
 
 코드
-
-![image.png](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%209.png)
+<img width="719" height="300" alt="image" src="https://github.com/user-attachments/assets/e3dff8d2-1524-4125-bfdb-24ec1e68c97e" />
 
 구현결과
-
-![bbomb.gif](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/bbomb.gif)
-
-</aside>
+<img width="816" height="378" alt="image" src="https://github.com/user-attachments/assets/4cf0cfbf-f711-40eb-929c-4e47228f2622" />
 
 ---
 
-## Procedural Mesh
+### Procedural Mesh
 
-### I. Procedural Mesh
+#### I. Procedural Mesh
 
 <aside>
 ✨
