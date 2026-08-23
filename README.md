@@ -32,7 +32,7 @@
 - TArray<T>를 이용하여 미리 생성후 활성화/비활성화를 통한 Actor 배치
   
 코드
-```cpp
+```c++
 
 /// <summary>
 /// 풀 초기화, 나이아가라 시스템 풀
@@ -121,7 +121,7 @@ void AObjectPoolSystem::ReturnPooledObject_NsDisplay(ANsDisplay* Ns_Display)
 
 코드
 
-```csharp
+```c++
 /// <summary>
 /// 점수 획득, 보간 트리거 
 /// </summary>
@@ -286,39 +286,33 @@ Geometry Collection 생성
 
 #### I. Procedural Mesh
 
-<aside>
-✨
 
 구현목표 
-
 - Static Mesh와 실시간으로 변형되어 찌그러짐을 표현
 
 구현방법 
-
 - 기본 Static Mesh로 부터 Procedural Mesh 생성
 - player Tag를 가진 액터와의 충돌에서 계산된 충격량에 따라 찌그러짐구현
 
-코드
-
-![충돌 부분의 인근 정점 수집 →  정점 위치 변형](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%2010.png)
+코드  
+<img width="766" height="545" alt="image" src="https://github.com/user-attachments/assets/770fb565-249b-478e-acb4-a9e88f0c692b" />
 
 충돌 부분의 인근 정점 수집 →  정점 위치 변형
+<img width="449" height="630" alt="image" src="https://github.com/user-attachments/assets/9c716836-d274-436f-8753-5f93da0a1e9a" />
 
-![변경된 정점에 따라 Procedural Mesh와 Convex Mesh 업데이트](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%2011.png)
 
 변경된 정점에 따라 Procedural Mesh와 Convex Mesh 업데이트
-
 - 전체코드 : [https://blueprintue.com/render/heumgs78/](https://blueprintue.com/render/heumgs78/)
 - Get Points In Sphere : [https://blueprintue.com/blueprint/__0gkx4p/](https://blueprintue.com/blueprint/__0gkx4p/)
 - Update Vertex Position 코드 : [https://blueprintue.com/blueprint/ak95lnla/](https://blueprintue.com/blueprint/ak95lnla/)
 
-구현결과
 
-![실시간으로 변형되는 Procedural Mesh](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/pc.gif)
+구현결과. 
+<img width="654" height="407" alt="image" src="https://github.com/user-attachments/assets/2e3c9c2a-f832-412d-b525-adac76082a89" />
 
 실시간으로 변형되는 Procedural Mesh
 
-![변형된 컨벡스 메시](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%2012.png)
+<img width="1055" height="602" alt="image" src="https://github.com/user-attachments/assets/8abdd09f-9d61-4561-be22-c8d2caa40755" />
 
 변형된 컨벡스 메시
 
