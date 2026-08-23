@@ -169,9 +169,9 @@ void AProjectD_DefaultGameMode::InterpolateScore(float dt)
 
 구현결과  
 
-<img width="763" height="394" alt="Image" src="https://github.com/user-attachments/assets/f5016e9c-748b-48a9-869f-7e249f4e6ea4" />
+<img width="509" height="254" alt="Image" src="https://github.com/user-attachments/assets/f5016e9c-748b-48a9-869f-7e249f4e6ea4" />
 
-<img width="763" height="394" alt="Image" src="https://github.com/user-attachments/assets/b4807dc8-3536-4c71-8761-4956866ba36a" />
+<img width="509" height="254" alt="Image" src="https://github.com/user-attachments/assets/b4807dc8-3536-4c71-8761-4956866ba36a" />
 
 
 
@@ -293,7 +293,6 @@ Geometry Collection 생성
 
 #### I. Procedural Mesh
 
-
 구현목표 
 - Static Mesh와 실시간으로 변형되어 찌그러짐을 표현
 
@@ -304,7 +303,7 @@ Geometry Collection 생성
 코드  
 <img width="766" height="545" alt="image" src="https://github.com/user-attachments/assets/770fb565-249b-478e-acb4-a9e88f0c692b" />
 
-충돌 부분의 인근 정점 수집 →  정점 위치 변형
+충돌 부분의 인근 정점 수집 →  정점 위치 변형  
 <img width="449" height="630" alt="image" src="https://github.com/user-attachments/assets/9c716836-d274-436f-8753-5f93da0a1e9a" />
 
 
