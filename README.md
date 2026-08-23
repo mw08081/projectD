@@ -1,3 +1,7 @@
+
+<img width="800" height="322" alt="2026-08-2115 59 58-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/27cb5d16-508d-4b16-a828-64d66af6206a" />
+
+
 # 때려쳐 : 샷건 시뮬레이터
 
 
