@@ -1,7 +1,3 @@
-
-<img width="800" height="322" alt="2026-08-2115 59 58-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/27cb5d16-508d-4b16-a828-64d66af6206a" />
-
-
 # 때려쳐 : 샷건 시뮬레이터
 
 
@@ -107,7 +103,7 @@ void AObjectPoolSystem::ReturnPooledObject_NsDisplay(ANsDisplay* Ns_Display)
 
 게임 시작 시, 미리 풀이 형성    
   
-<img width="816" height="378" alt="image" src="https://github.com/user-attachments/assets/6159439b-2dca-4e9a-8e01-18b26bea442e" />
+<img width="816" height="378" alt="Image" src="https://github.com/user-attachments/assets/be32309b-908c-46a5-9ca3-d560b615a784" />
 
 액터 요청 시 레벨에 표시 ➡️ 일정시간 이후 회수  
 
@@ -172,8 +168,11 @@ void AProjectD_DefaultGameMode::InterpolateScore(float dt)
 ```
 
 구현결과  
-<img width="763" height="394" alt="image" src="https://github.com/user-attachments/assets/baa21806-874d-4c50-ad87-32769581c0df" />
-<img width="763" height="394" alt="image" src="https://github.com/user-attachments/assets/e4c5c43a-0ca4-4099-8e73-e3486eff7ad8" />
+
+<img width="763" height="394" alt="Image" src="https://github.com/user-attachments/assets/f5016e9c-748b-48a9-869f-7e249f4e6ea4" />
+
+<img width="763" height="394" alt="Image" src="https://github.com/user-attachments/assets/b4807dc8-3536-4c71-8761-4956866ba36a" />
+
 
 
 ### III. 벡터의 내적을 이용하여 액터를 던지는 각도 계산
@@ -199,11 +198,12 @@ void AProjectD_DefaultGameMode::InterpolateScore(float dt)
 
 구현결과
 
-<img width="654" height="407" alt="image" src="https://github.com/user-attachments/assets/aad7f2eb-6321-4bc5-b96e-62839c7af0a7" />
+
+<img width="654" height="407" alt="Image" src="https://github.com/user-attachments/assets/c39e5706-5dc3-49b7-a8a2-9342aa532a79" />
 
 파편 분산 정도(Directional Magnitude) 정상적용
 
-<img width="654" height="407" alt="image" src="https://github.com/user-attachments/assets/78206b39-1866-48b7-8501-bd4be5c9b08c" />
+<img width="654" height="407" alt="Image" src="https://github.com/user-attachments/assets/399efecd-45a4-43c2-bfff-ce9b6b38f33d" />
 
 파편 분산 정도(Directional Magnitude) 감소
 
@@ -229,7 +229,9 @@ void AProjectD_DefaultGameMode::InterpolateScore(float dt)
 구현결과  
 
 - 머그컵 데미지 임계점 : 3,000
-<img width="451" height="313" alt="image" src="https://github.com/user-attachments/assets/b027b5f5-ad7d-4cf5-ac3c-304190e63aca" />
+
+<img width="451" height="313" alt="Image" src="https://github.com/user-attachments/assets/eb848fb8-a66d-4c92-a549-143603a71d7f" />
+
 
 좌 데미지: 2000, 우 데미지: 5000
 
@@ -260,7 +262,7 @@ Geometry Collection 생성
 
 구현결과  
 
-<img width="451" height="313" alt="image" src="https://github.com/user-attachments/assets/7ae99be8-45ca-4487-928c-bcbcf3554e8b" />
+<img width="451" height="313" alt="Image" src="https://github.com/user-attachments/assets/8d623041-a5ac-4488-b545-d1143ccb31dc" />
 
 던져지는 순간 Static Mesh 사용 ➡️ 부딪히는 순간부터 Geometry Collection 사용
 
@@ -282,7 +284,8 @@ Geometry Collection 생성
 <img width="719" height="300" alt="image" src="https://github.com/user-attachments/assets/e3dff8d2-1524-4125-bfdb-24ec1e68c97e" />
 
 구현결과
-<img width="816" height="378" alt="image" src="https://github.com/user-attachments/assets/4cf0cfbf-f711-40eb-929c-4e47228f2622" />
+
+<img width="816" height="378" alt="Image" src="https://github.com/user-attachments/assets/5c8421ee-8c2e-45bb-9eeb-8b01cc1da47d" />
 
 ---
 
@@ -312,7 +315,7 @@ Geometry Collection 생성
 
 
 구현결과. 
-<img width="654" height="407" alt="image" src="https://github.com/user-attachments/assets/2e3c9c2a-f832-412d-b525-adac76082a89" />
+<img width="654" height="407" alt="Image" src="https://github.com/user-attachments/assets/d7eb397c-7a07-4e73-9f4f-09e607ef942f" />
 
 실시간으로 변형되는 Procedural Mesh
 
