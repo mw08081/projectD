@@ -1,0 +1,394 @@
+# 때려쳐 : 샷건 시뮬레이터
+
+![titleArtWithlog.png](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/titleArtWithlog.png)
+
+# 프로젝트 소개
+
+<aside>
+📣
+
+개발엔진: Unreal Engine 5(5.3.2)
+
+개발기간: 2023.11 ~ 2024.12(예정)
+
+출       시: 2024.12(예정)
+
+게임설명 : 직장생활에 지친 직장인들에게 주변 사물을 때려 부수며 스트레스를 풀 수 있는 게임으로, 사실적인 사물표현과 사물파괴를 기반으로 쾌감과 즐거움을 제공하는 게임
+
+</aside>
+
+# 담당 파트
+
+<aside>
+💡
+
+메인 클라이언트 프로그래머
+
+- 플레이어 조작
+- 현실적인 사물 표현 및 사물간 상호작용
+</aside>
+
+# 기술설명
+
+<aside>
+🛠️
+
+구현 기술에 대한 설명이 필요한 주된 메커니즘들을 설명합니다
+
+[기반 시스템](https://app.notion.com/p/125ce4f4d10880869911dbe17f81e169?pvs=21) : 오브젝트 풀링, 점수 증가, 벡터의 내적
+
+[Chaos Physics Engine](https://app.notion.com/p/Chaos-Physics-Engine-125ce4f4d108808e8611c8bd7618e6e7?pvs=21) : FractureSystem, FieldSystem
+
+[Procedural Mesh](https://app.notion.com/p/Procedural-Mesh-125ce4f4d1088087a525e937e1cc6e29?pvs=21) 
+
+</aside>
+
+## 기반 시스템
+
+### I. 오브젝트 풀링
+
+<aside>
+✨
+
+구현목표 
+
+- 자주 사용하는 Actor를 미리 생성하여 게임을 최적화
+
+구현방법 
+
+- TArray<T>를 이용하여 미리 생성후 활성화/비활성화를 통한 Actor 배치
+
+코드
+
+```cpp
+
+/// <summary>
+/// 풀 초기화, 나이아가라 시스템 풀
+/// </summary>
+/// <param name="_PoolTargetClass_NsDisplay"></param>
+/// <param name="_PoolSize_NsDisplay"></param>
+void AObjectPoolSystem::InitializePool_NsDisplay(TSubclassOf<ANsDisplay> _PoolTargetClass_NsDisplay, int32 _PoolSize_NsDisplay)
+{
+    PoolTargetClass_NsDisplay = _PoolTargetClass_NsDisplay;
+    PoolSize_NsDisplay = _PoolSize_NsDisplay;
+
+    for (int32 i = 0; i < PoolSize_NsDisplay; ++i)
+    {
+        ANsDisplay* NewActor = GetWorld()->SpawnActor<ANsDisplay>(PoolTargetClass_NsDisplay);
+        NewActor->SetActorHiddenInGame(true);
+        ObjectPool_NsDisplay.Add(NewActor);
+    }
+}
+
+/// <summary>
+/// 풀 받아오기
+/// </summary>
+/// <returns>사용가능한 액터</returns>
+ANsDisplay* AObjectPoolSystem::GetPooledObject_NsDisplay()
+{
+    for (ANsDisplay* nsDisplay : ObjectPool_NsDisplay)
+    {
+        if (nsDisplay->IsHidden())
+        {
+            nsDisplay->SetActorHiddenInGame(false);
+            nsDisplay->SetActorTickEnabled(true);
+            return nsDisplay;
+        }
+    }
+
+    return GetAddtionalObject_NsDisplay();
+}
+
+/// <summary>
+/// 사용가능한 풀이 없을 경우
+/// </summary>
+/// <returns>추가 액터</returns>
+ANsDisplay* AObjectPoolSystem::GetAddtionalObject_NsDisplay()
+{
+		// 추가 생성
+    ANsDisplay* addtionalNewNsDisplay =
+			     GetWorld()->SpawnActor<ANsDisplay>(PoolTargetClass_NsDisplay);
+			     
+		// 비활성화 하여 제공
+    addtionalNewNsDisplay->SetActorHiddenInGame(false);
+    addtionalNewNsDisplay->SetActorTickEnabled(true);
+    return addtionalNewNsDisplay;
+}
+
+/// <summary>
+/// 액터 사용완료 후, 풀로 반환
+/// </summary>
+/// <param name="Ns_Display"></param>
+void AObjectPoolSystem::ReturnPooledObject_NsDisplay(ANsDisplay* Ns_Display)
+{
+    Ns_Display->SetActorHiddenInGame(true);
+}
+```
+
+구현결과
+
+![게임 시작 시, 미리 풀이 형성](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image.png)
+
+게임 시작 시, 미리 풀이 형성
+
+![액터 요청 시 레벨에 표시 ➡️ 일정시간 이후 회수](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/pool.gif)
+
+액터 요청 시 레벨에 표시 ➡️ 일정시간 이후 회수
+
+</aside>
+
+---
+
+### II. 점수증가 feat. Lerp
+
+<aside>
+✨
+
+구현목표 
+
+- 점수 증가의 표현을 시각적으로 표현
+
+구현방법 
+
+- Lerp함수를 이용하여 점수 증가를 시각적으로 표현
+- 최대/최소값을 기반으로 작은 값은 최솟값으로, 큰 값은 최댓값으로 제한
+
+코드
+
+```csharp
+/// <summary>
+/// 점수 획득, 보간 트리거 
+/// </summary>
+/// <param name="price">획득점수</param>
+void AProjectD_DefaultGameMode::GetScore(int32 price)
+{
+	// 새로운 보간의 시작 (시작 : 현재점수, 목표 : 현재점수 + price)
+	ScoreInterpolStartVal = CurScore;
+	InterpolTargetScore += price;
+
+	// 보간값 초기화
+	ElapsedScoreInterpolTime = 0;
+	// 보간 소요시간 기본 설정
+	ScoreInterpolDuration = FMath::Abs(ScoreInterpolStartVal - InterpolTargetScore)
+															* SCORE_INTERPOL_DURATION_RATE
+	// 보간 소요시간 최댓값 필터
+	ScoreInterpolDuration = 
+						FMath::Min(ScoreInterpolDuration, SOCRE_INTERPOL_MAX_DURATION);
+	// 보간 소요시간 최솟값 필터						
+	ScoreInterpolDuration = 
+						FMath::Max(ScoreInterpolDuration, SCORE_INTERPOL_MIN_DURATION);
+
+	CountSlowStack();
+}
+
+/// <summary>
+/// Tick함수에서 실행
+/// CurScore이 InterpolTargetScore보다 작을때만 실행(GetScore 실행시 Trigger)
+/// </summary>
+/// <param name="dt">DeltaTime</param>
+void AProjectD_DefaultGameMode::InterpolateScore(float dt)
+{
+	if (CurScore >= InterpolTargetScore) { 
+		CurScore = InterpolTargetScore;
+		return; 
+	}
+	ElapsedScoreInterpolTime += dt;
+
+	// 고정된 A to B의 Lerp
+	CurScore = FMath::Lerp(ScoreInterpolStartVal, 
+												InterpolTargetScore, 
+												ElapsedScoreInterpolTime / ScoreInterpolDuration);
+}
+```
+
+구현결과
+
+![lerp 1.gif](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/lerp_1.gif)
+
+![l2.gif](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/l2.gif)
+
+</aside>
+
+### III. 벡터의 내적을 이용하여 액터를 던지는 각도 계산
+
+<aside>
+✨
+
+구현목표 
+
+- 액터를 던지는 각도에 따라 Directinal Mag의 크기 조절 구현
+
+구현방법 
+
+- 플레이어의 Forward Vector와 카메라 Forward Vector의 내적을 이용하여 던지는 각도 계산
+- 각도에 따라 Directional Mag 감소 여부 확인
+
+코드
+
+![플레이어의 Forward Vector와 카메라 Forward Vector의 내적을 이용하여 던지는 각도 계산](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%201.png)
+
+플레이어의 Forward Vector와 카메라 Forward Vector의 내적을 이용하여 던지는 각도 계산
+
+![image.png](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%202.png)
+
+![각도에 따라 Directional Mag 감소 여부 확](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%203.png)
+
+각도에 따라 Directional Mag 감소 여부 확
+
+구현결과
+
+![파편 분산 정도(Directional Magnitude) 정상적용](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/th_1.gif)
+
+파편 분산 정도(Directional Magnitude) 정상적용
+
+![파편 분산 정도(Directional Magnitude) 감소](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/th2.gif)
+
+파편 분산 정도(Directional Magnitude) 감소
+
+</aside>
+
+---
+
+## Chaos Physics Engine
+
+### I. Fracture System
+
+<aside>
+✨
+
+구현목표 
+
+- Static Mesh와 다르게 부숴지는 액터를 카오스 물리엔진으로 표현
+
+구현방법 
+
+- 프렉쳐 시스템을 이용하여 Geometry Collection 생성
+- Convex 콜리전을 세밀하게 조정
+
+![총 23조각으로 Fracture 적용, Geometry Collection의 엉성한 Convex 콜리젼](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%204.png)
+
+총 23조각으로 Fracture 적용, Geometry Collection의 엉성한 Convex 콜리젼
+
+![image.png](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%205.png)
+
+![image.png](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%206.png)
+
+구현결과
+
+- 머그컵 데미지 임계점 : 3,000
+
+![좌 데미지: 2000, 우 데미지: 5000](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/fracture.gif)
+
+좌 데미지: 2000, 우 데미지: 5000
+
+</aside>
+
+---
+
+### II. Geometry Collecion - Set Actor Location 의 한계
+
+<aside>
+✨
+
+구현목표 
+
+- Set Actor Location 이 안 되기 때문에, 물건을 집어 던지는 행위에 제한 발생
+    
+    ➡️ 던질 수 있도록 구현
+    
+
+구현방법 
+
+- 액터 이동 필요 시 Static Mesh 모델 사용
+- 던져서 충돌 시 Geometry Collection과 Master Field를 생성하여 파괴
+
+코드
+
+![Master Field 생성 (추후 오브젝트 풀링 적용)](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%207.png)
+
+Master Field 생성 (추후 오브젝트 풀링 적용)
+
+---
+
+![Geometry Collection 생성](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%208.png)
+
+Geometry Collection 생성
+
+구현결과
+
+![던져지는 순간 Static Mesh 사용 ➡️ 부딪히는 순간부터 Geometry Collection 사용](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/throwing.gif)
+
+던져지는 순간 Static Mesh 사용 ➡️ 부딪히는 순간부터 Geometry Collection 사용
+
+</aside>
+
+---
+
+### III. Field System - Bomb Field
+
+<aside>
+✨
+
+구현목표 
+
+- Fracture System 뿐만 아니라 Static Mesh에도 영향을 줄 수 있도록 구현
+
+구현방법 
+
+- Static Mesh 액터와 Geometry Collection액터에 Field System에 대한 Overlap Event 추가
+- 피직스 바디 깨우기(수정)
+- Geomoetry Collection과의 콜리젼 발생(수정)
+
+코드
+
+![image.png](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%209.png)
+
+구현결과
+
+![bbomb.gif](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/bbomb.gif)
+
+</aside>
+
+---
+
+## Procedural Mesh
+
+### I. Procedural Mesh
+
+<aside>
+✨
+
+구현목표 
+
+- Static Mesh와 실시간으로 변형되어 찌그러짐을 표현
+
+구현방법 
+
+- 기본 Static Mesh로 부터 Procedural Mesh 생성
+- player Tag를 가진 액터와의 충돌에서 계산된 충격량에 따라 찌그러짐구현
+
+코드
+
+![충돌 부분의 인근 정점 수집 →  정점 위치 변형](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%2010.png)
+
+충돌 부분의 인근 정점 수집 →  정점 위치 변형
+
+![변경된 정점에 따라 Procedural Mesh와 Convex Mesh 업데이트](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%2011.png)
+
+변경된 정점에 따라 Procedural Mesh와 Convex Mesh 업데이트
+
+- 전체코드 : [https://blueprintue.com/render/heumgs78/](https://blueprintue.com/render/heumgs78/)
+- Get Points In Sphere : [https://blueprintue.com/blueprint/__0gkx4p/](https://blueprintue.com/blueprint/__0gkx4p/)
+- Update Vertex Position 코드 : [https://blueprintue.com/blueprint/ak95lnla/](https://blueprintue.com/blueprint/ak95lnla/)
+
+구현결과
+
+![실시간으로 변형되는 Procedural Mesh](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/pc.gif)
+
+실시간으로 변형되는 Procedural Mesh
+
+![변형된 컨벡스 메시](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image%2012.png)
+
+변형된 컨벡스 메시
+
+</aside>
