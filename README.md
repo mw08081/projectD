@@ -1,65 +1,37 @@
 # 때려쳐 : 샷건 시뮬레이터
 
-![titleArtWithlog.png](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/titleArtWithlog.png)
 
-# 프로젝트 소개
+## 프로젝트 소개
+- 개발엔진: Unreal Engine 5(5.3.2)
+- 개발기간: 2023.11 ~ 2024.12(예정)
+- 출시: 2024.12(예정)
+- 게임설명 : 직장생활에 지친 직장인들에게 주변 사물을 때려 부수며 스트레스를 풀 수 있는 게임으로, 사실적인 사물표현과 사물파괴를 기반으로 쾌감과 즐거움을 제공하는 게임
 
-<aside>
-📣
 
-개발엔진: Unreal Engine 5(5.3.2)
-
-개발기간: 2023.11 ~ 2024.12(예정)
-
-출       시: 2024.12(예정)
-
-게임설명 : 직장생활에 지친 직장인들에게 주변 사물을 때려 부수며 스트레스를 풀 수 있는 게임으로, 사실적인 사물표현과 사물파괴를 기반으로 쾌감과 즐거움을 제공하는 게임
-
-</aside>
-
-# 담당 파트
-
-<aside>
-💡
-
+## 담당 파트
 메인 클라이언트 프로그래머
-
 - 플레이어 조작
 - 현실적인 사물 표현 및 사물간 상호작용
-</aside>
 
-# 기술설명
 
-<aside>
-🛠️
+## 기술설명
 
 구현 기술에 대한 설명이 필요한 주된 메커니즘들을 설명합니다
+- 기반시스템
+- Chaos Physics Engine
+- Procedural Mesh
 
-[기반 시스템](https://app.notion.com/p/125ce4f4d10880869911dbe17f81e169?pvs=21) : 오브젝트 풀링, 점수 증가, 벡터의 내적
+### 기반 시스템
 
-[Chaos Physics Engine](https://app.notion.com/p/Chaos-Physics-Engine-125ce4f4d108808e8611c8bd7618e6e7?pvs=21) : FractureSystem, FieldSystem
-
-[Procedural Mesh](https://app.notion.com/p/Procedural-Mesh-125ce4f4d1088087a525e937e1cc6e29?pvs=21) 
-
-</aside>
-
-## 기반 시스템
-
-### I. 오브젝트 풀링
-
-<aside>
-✨
+#### I. 오브젝트 풀링
 
 구현목표 
-
 - 자주 사용하는 Actor를 미리 생성하여 게임을 최적화
-
+  
 구현방법 
-
 - TArray<T>를 이용하여 미리 생성후 활성화/비활성화를 통한 Actor 배치
-
+  
 코드
-
 ```cpp
 
 /// <summary>
@@ -127,15 +99,11 @@ void AObjectPoolSystem::ReturnPooledObject_NsDisplay(ANsDisplay* Ns_Display)
 
 구현결과
 
-![게임 시작 시, 미리 풀이 형성](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/image.png)
+<img width="250" height="210" alt="image" src="https://github.com/user-attachments/assets/ffd070cf-a045-42c2-a139-437ecff5b3fa" />  
+게임 시작 시, 미리 풀이 형성  
 
-게임 시작 시, 미리 풀이 형성
-
-![액터 요청 시 레벨에 표시 ➡️ 일정시간 이후 회수](%EB%95%8C%EB%A0%A4%EC%B3%90%20%EC%83%B7%EA%B1%B4%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0/pool.gif)
-
-액터 요청 시 레벨에 표시 ➡️ 일정시간 이후 회수
-
-</aside>
+<img width="816" height="378" alt="image" src="https://github.com/user-attachments/assets/6159439b-2dca-4e9a-8e01-18b26bea442e" />  
+액터 요청 시 레벨에 표시 ➡️ 일정시간 이후 회수  
 
 ---
 
