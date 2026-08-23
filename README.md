@@ -21,9 +21,7 @@
 - [Chaos Physics Engine]()
 - [Procedural Mesh]()
 
-### 기반 시스템
-
-#### I. 오브젝트 풀링
+### 기반 시스템: 오브젝트 풀링
 
 구현목표 
 - 자주 사용하는 Actor를 미리 생성하여 게임을 최적화
@@ -109,8 +107,7 @@ void AObjectPoolSystem::ReturnPooledObject_NsDisplay(ANsDisplay* Ns_Display)
 
 ---
 
-### II. 점수증가 feat. Lerp
-
+### 기반 시스템: 점수증가 feat. Lerp
 
 구현목표 
 - 점수 증가의 표현을 시각적으로 표현
@@ -175,7 +172,7 @@ void AProjectD_DefaultGameMode::InterpolateScore(float dt)
 
 
 
-### III. 벡터의 내적을 이용하여 액터를 던지는 각도 계산
+### 기반 시스템 : 벡터의 내적을 이용하여 액터를 던지는 각도 계산
 
 구현목표 
 - 액터를 던지는 각도에 따라 Directinal Mag의 크기 조절 구현
@@ -209,9 +206,7 @@ void AProjectD_DefaultGameMode::InterpolateScore(float dt)
 
 ---
 
-### Chaos Physics Engine
-
-#### I. Fracture System
+### Chaos Physics Engine : Fracture System
 
 구현목표 
 - Static Mesh와 다르게 부숴지는 액터를 카오스 물리엔진으로 표현
@@ -238,7 +233,7 @@ void AProjectD_DefaultGameMode::InterpolateScore(float dt)
 
 ---
 
-#### II. Geometry Collecion - Set Actor Location 의 한계
+### Chaos Physics Engine : Geometry Collecion - Set Actor Location 의 한계
 
 구현목표 
 - Set Actor Location 이 안 되기 때문에, 물건을 집어 던지는 행위에 제한 발생
@@ -269,8 +264,7 @@ Geometry Collection 생성
 
 ---
 
-#### III. Field System - Bomb Field
-
+### Chaos Physics Engine : Field System - Bomb Field
 
 구현목표 
 - Fracture System 뿐만 아니라 Static Mesh에도 영향을 줄 수 있도록 구현
@@ -289,9 +283,7 @@ Geometry Collection 생성
 
 ---
 
-### Procedural Mesh
-
-#### I. Procedural Mesh
+### Procedural Mesh: Procedural Mesh
 
 구현목표 
 - Static Mesh와 실시간으로 변형되어 찌그러짐을 표현
