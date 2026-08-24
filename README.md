@@ -24,9 +24,12 @@
 <br/>
 <br/>   
 
+
 ### 기반 시스템: 오브젝트 풀링
 
-구현목표 
+<blockquote>
+	
+구현목표    
 - 자주 사용하는 Actor를 미리 생성하여 게임을 최적화
   
 구현방법 
@@ -107,12 +110,18 @@ void AObjectPoolSystem::ReturnPooledObject_NsDisplay(ANsDisplay* Ns_Display)
 <img width="816" height="378" alt="Image" src="https://github.com/user-attachments/assets/be32309b-908c-46a5-9ca3-d560b615a784" />
 
 액터 요청 시 레벨에 표시 ➡️ 일정시간 이후 회수  
+</blockquote>
 
----
 
+
+
+	
 ### 기반 시스템: 점수증가 feat. Lerp
 
-구현목표 
+
+<blockquote>
+	
+구현목표   
 - 점수 증가의 표현을 시각적으로 표현
 
 구현방법 
@@ -172,11 +181,13 @@ void AProjectD_DefaultGameMode::InterpolateScore(float dt)
 <img width="509" height="254" alt="Image" src="https://github.com/user-attachments/assets/f5016e9c-748b-48a9-869f-7e249f4e6ea4" />
 
 <img width="509" height="254" alt="Image" src="https://github.com/user-attachments/assets/b4807dc8-3536-4c71-8761-4956866ba36a" />
+</blockquote>
 
 
 
 ### 기반 시스템 : 벡터의 내적을 이용하여 액터를 던지는 각도 계산
 
+<blockquote>
 구현목표 
 - 액터를 던지는 각도에 따라 Directinal Mag의 크기 조절 구현
 
@@ -206,8 +217,9 @@ void AProjectD_DefaultGameMode::InterpolateScore(float dt)
 <img width="654" height="407" alt="Image" src="https://github.com/user-attachments/assets/399efecd-45a4-43c2-bfff-ce9b6b38f33d" />
 
 파편 분산 정도(Directional Magnitude) 감소
+</blockquote>
 
----
+
 
   
 <br/>
@@ -215,7 +227,7 @@ void AProjectD_DefaultGameMode::InterpolateScore(float dt)
 <br/>   
 
 ### Chaos Physics Engine : Fracture System
-
+<blockquote>
 구현목표 
 - Static Mesh와 다르게 부숴지는 액터를 카오스 물리엔진으로 표현
 
@@ -237,12 +249,11 @@ void AProjectD_DefaultGameMode::InterpolateScore(float dt)
 
 
 좌 데미지: 2000, 우 데미지: 5000
+</blockquote>
 
-
----
 
 ### Chaos Physics Engine : Geometry Collecion - Set Actor Location 의 한계
-
+<blockquote>
 구현목표 
 - Set Actor Location 이 안 되기 때문에, 물건을 집어 던지는 행위에 제한 발생
     ➡️ 던질 수 있도록 구현
@@ -258,7 +269,6 @@ void AProjectD_DefaultGameMode::InterpolateScore(float dt)
 
 Master Field 생성 (추후 오브젝트 풀링 적용)
 
----
 <img width="692" height="547" alt="image" src="https://github.com/user-attachments/assets/0193f9e4-3017-4289-80ca-47668b61e395" />
 
 Geometry Collection 생성
@@ -269,11 +279,13 @@ Geometry Collection 생성
 
 던져지는 순간 Static Mesh 사용 ➡️ 부딪히는 순간부터 Geometry Collection 사용
 
+</blockquote>
 
----
+
 
 ### Chaos Physics Engine : Field System - Bomb Field
 
+<blockquote>
 구현목표 
 - Fracture System 뿐만 아니라 Static Mesh에도 영향을 줄 수 있도록 구현
 
@@ -288,8 +300,7 @@ Geometry Collection 생성
 구현결과
 
 <img width="816" height="378" alt="Image" src="https://github.com/user-attachments/assets/5c8421ee-8c2e-45bb-9eeb-8b01cc1da47d" />
-
----
+</blockquote>
 
   
 <br/>
@@ -297,8 +308,9 @@ Geometry Collection 생성
 <br/>   
 
 ### Procedural Mesh: Procedural Mesh
-
-구현목표 
+<blockquote>
+	
+구현목표   
 - Static Mesh와 실시간으로 변형되어 찌그러짐을 표현
 
 구현방법 
@@ -327,4 +339,4 @@ Geometry Collection 생성
 
 변형된 컨벡스 메시
 
-</aside>
+</blockquote>
